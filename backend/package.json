@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "Server.js",
+  "scripts": {
+    "start": "node --env-file .env --watch Server.js"
+  },
+  "keywords": [
+    "Reconocimiento de voz",
+    "Inteligencia Artificial",
+    "Aprendizaje de Lenguaje de Señas Colombiano",
+    "Niños de Primera Infancia",
+    "Prototipo",
+    "Accesibilidad",
+    "Inclusión",
+    "Tecnología Asistiva",
+    "Educación Inclusiva"
+  ],
+  "author": "Santiago Romero - Adriana Osorio",
+  "license": "",
+  "description": "Prototipo de un sistema de reconocimiento de voz integrando técnicas y herramientas de IA, enfocado al aprendizaje del lenguaje de señas colombiano dirigido a niños de primera infancia",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mysql2": "^3.9.7",
+    "sequelize": "^6.37.3"
+  }
+}
