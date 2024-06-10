@@ -17,7 +17,9 @@ Audio.hasOne(TextAudio, {
 
 // Relación inversa: Un TextAudio pertenece a un Audio
 TextAudio.belongsTo(Audio, {
-  foreignKey: 'IdAudio' // La clave externa en TextAudio que hace referencia a Audio
+  foreignKey: 'IdAudio', // La clave externa en TextAudio que hace referencia a Audio
+  onDelete: 'SET NULL',  // Si se elimina un Audio, establecer la clave foránea a NULL para mantener el TextAudio
+  onUpdate: 'CASCADE'    // Si se actualiza la clave primaria de Audio, se actualizará automáticamente en TextAudio
 })
 
 // Relación muchos a muchos: Un TextAudio puede tener muchas Keywords y una Keyword puede estar asociada a muchos TextAudio
