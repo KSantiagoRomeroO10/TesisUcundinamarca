@@ -32,7 +32,7 @@ const startServer = async () => {
   await CreateTables()
 
   Server.listen(Port, () => {
-      console.log(`Servidor escuchando en el puerto ${Port}.`)
+    console.log(`Servidor escuchando en el puerto ${Port}.`)
   })
 }
 

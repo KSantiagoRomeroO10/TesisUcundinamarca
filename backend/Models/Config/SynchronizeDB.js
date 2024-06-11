@@ -20,7 +20,7 @@ const SynchronizeDB = () => {
       console.log('Base de datos sincronizada.')
     })
     .catch(error => {
-      console.error('Error al crear la base de datos: ', error.message)
+      console.error('Error al crear la base de datos.', error.message)
     })
     .finally(() => {
       if (connection) {
