@@ -18,20 +18,32 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const express = require('express')
+const Express = require('express')
+const Routes = require('./Routes/Index')
 
 const SynchronizeDB = require('./Models/Config/SynchronizeDB')
 const { CreatedDB, CreateTables } = SynchronizeDB()
 
-const Server = express()
+const StartPythonAPI = require('./ApiPython/StartPythonAPI')
+
+const Server = Express()
+
+Server.use(Express.json())
+Server.use(Routes)
 
 const Port = 3000
 
 const startServer = async () => {
-  await CreatedDB()
-  await CreateTables()
-
-  Server.listen(Port, () => {
+  Server.listen(Port, async () => {
+    await CreatedDB()
+    await CreateTables()
+    try{
+      const result = await StartPythonAPI() 
+      console.log(result);
+    }
+    catch(error){
+      console.log(error);
+    }
     console.log(`Servidor escuchando en el puerto ${Port}.`)
   })
 }

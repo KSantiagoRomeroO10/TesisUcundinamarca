@@ -1,17 +1,30 @@
-const { DataTypes } = require('sequelize')
+const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
 
-const KeyWord = sequelize.define('KeyWord', {
-  IdKeyWord: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
+class KeyWord extends Model{}
+KeyWord.init({
+    idKeyWord: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    keyWord: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    IdAudioFK: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      unique: true
+    },
+    IdVideoFK: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true
+    }
   },
-  KeyWord: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-})
+  {sequelize, modelName: 'keyword'}
+)
 
 module.exports = KeyWord

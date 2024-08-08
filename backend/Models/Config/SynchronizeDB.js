@@ -17,7 +17,7 @@ const SynchronizeDB = () => {
       return connection.query(`CREATE DATABASE IF NOT EXISTS ${ConfigDB.database}`)
     })
     .then(() => {
-      console.log('Base de datos sincronizada.')
+      console.log('Base de datos creada.')
     })
     .catch(error => {
       console.error('Error al crear la base de datos.', error.message)
@@ -32,7 +32,7 @@ const SynchronizeDB = () => {
   const CreateTables = async () => {
     await sequelize.authenticate()
     .then(() => {
-      console.log('Autenticación para sincronizar las tablas realizada.')
+      console.log('Autenticación realizada.')
     })
     .catch(error => {
       console.log('Error al autenticar.', error.message)

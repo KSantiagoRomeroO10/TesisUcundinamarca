@@ -1,17 +1,20 @@
-const { DataTypes } = require('sequelize')
+const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
 
-const Video = sequelize.define('Video', {
-  IdVideo: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
+class Video extends Model{}
+Video.init({
+    idVideo: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    video: {
+      type: DataTypes.BLOB,
+      allowNull: false
+    }
   },
-  Video: {
-    type: DataTypes.BLOB,
-    allowNull: false
-  }
-})
+  {sequelize, modelName: 'video'}
+)
 
 module.exports = Video

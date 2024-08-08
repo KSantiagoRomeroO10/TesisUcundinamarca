@@ -1,17 +1,21 @@
-const { DataTypes } = require('sequelize')
+const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
 
-const Audio = sequelize.define('Audio', {
-  IdAudio: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false
+class Audio extends Model {}
+Audio.init(
+  {
+    idAudio: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    audio: {
+      type: DataTypes.BLOB,
+      allowNull: false      
+    }
   },
-  Audio: {
-    type: DataTypes.BLOB,
-    allowNull: false
-  }
-})
+  { sequelize, modelName: 'audio' }
+)
 
 module.exports = Audio
