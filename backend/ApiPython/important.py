@@ -14,6 +14,7 @@ def important():
   palabras_importantes = []
   for token in doc:
     if token.pos_ in ['VERB', 'NOUN', 'PROPN', 'ADJ', 'ADV', 'NUM']:
-      palabras_importantes.append(token.text)
+
+      palabras_importantes.append(token.lemma_)
 
   return jsonify(palabras_importantes), 200
