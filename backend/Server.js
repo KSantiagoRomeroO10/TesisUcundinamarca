@@ -19,6 +19,7 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const Express = require('express')
+const Cors = require('cors')
 const Routes = require('./Routes/Index')
 
 const SynchronizeDB = require('./Models/Config/SynchronizeDB')
@@ -29,9 +30,15 @@ const StartPythonAPI = require('./ApiPython/StartPythonAPI')
 const Server = Express()
 
 Server.use(Express.json())
+
+Server.use(Cors({
+  origin: ['http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}))
+
 Server.use(Routes)
 
-const Port = 3000
+const Port = 3001
 
 const startServer = async () => {
   Server.listen(Port, async () => {

@@ -1,17 +1,11 @@
-/* Clase principal de la aplicación */
-.App {
+.home {
   display: flex; 
   flex-direction: column; /* Coloca los elementos en columna */
   align-items: center; /* Centra los elementos horizontalmente en el contenedor */
   justify-content: center; /* Centra los elementos verticalmente en el contenedor */
   height: 100vh; /* La altura de la página es del 100% de la ventana del navegador */
-  background: url("./images/fondo2.gif");
+  background: url("../../images/fondo2.gif");
   text-align: center; 
-}
-
-
-.fondoHome {
-  background-color: #ffffff; /* Fondo para el home */
 }
 
 .titulo {
@@ -80,7 +74,7 @@
 }
 
 /* Estilo para el icono del micrófono */
-.mic-icon {
+.micIcon {
   height: 10rem; /* Altura del icono de micrófono */
   width: 10rem; /* Anchura del icono de micrófono */
   object-fit: contain; /* Ajusta la imagen del icono para que se mantenga dentro del contenedor sin distorsión */
@@ -104,14 +98,13 @@ body, html {
   margin: 0;
 }
 
-.navbar-logo h1 {
+.navbarLogo h1 {
   color: white;
   text-align: center; /* Centra el texto dentro del contenedor */
-  
 }
 
 /* Contenedor de botones */
-.navbar-buttons {
+.navbarButtons {
   display: flex;
   gap: 10px; /* Espaciado entre los botones */
 }

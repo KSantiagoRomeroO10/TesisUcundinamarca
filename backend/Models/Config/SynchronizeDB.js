@@ -25,6 +25,7 @@ const SynchronizeDB = () => {
     .finally(() => {
       if (connection) {
         connection.end()
+        console.log('Base de datos creada y se procede a cerrar la conexión.')        
       }
     })
   }
@@ -45,10 +46,10 @@ const SynchronizeDB = () => {
     .catch(error => {
       console.log('Error al sincronizar tablas.', error.message)
     })
-    .finally(() => {
-      sequelize.close()
-      console.log('Conexión a la base de datos cerrada.')
-    })
+    // .finally(() => {
+    //   sequelize.close()
+    //   console.log('Conexión a la base de datos cerrada.')
+    // })
   }
 
   return { CreatedDB, CreateTables }

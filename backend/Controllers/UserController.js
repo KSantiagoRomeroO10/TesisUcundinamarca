@@ -29,7 +29,24 @@ const GetUserById = async (req, res) => {
       res.status(200).json(user)
     }
     else {
-      res.status(404).json({ error: 'Usuario no encontrado' })
+      res.status(404).json({ error: 'User not found' })
+    }
+  } 
+  catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+const GetUserByName = async (req, res) => {
+  try {
+    const { name } = req.params
+    const user = await User.findOne({ where: { name } })
+    
+    if (user) {
+      res.status(200).json(user)
+    } 
+    else {
+      res.status(404).json({ error: 'User not found' })
     }
   } 
   catch (error) {
@@ -65,7 +82,7 @@ const DeleteUser = async (req, res) => {
       res.status(200).json({ message: 'Usuario eliminado' })
     } 
     else {
-      res.status(404).json({ error: 'Usuario no encontrado' })
+      res.status(404).json({ error: 'User not found' })
     }
   } 
   catch (error) {
@@ -73,4 +90,4 @@ const DeleteUser = async (req, res) => {
   }
 }
 
-module.exports = { CreateUser, GetUsers, GetUserById, UpdateUser, DeleteUser }
+module.exports = { CreateUser, GetUsers, GetUserById, GetUserByName, UpdateUser, DeleteUser }

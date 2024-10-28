@@ -10,7 +10,7 @@ Video.init({
       allowNull: false
     },
     video: {
-      type: DataTypes.BLOB,
+      type: DataTypes.BLOB('long'),
       allowNull: false
     }
   },

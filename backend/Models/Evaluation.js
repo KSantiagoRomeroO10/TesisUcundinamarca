@@ -10,8 +10,12 @@ Evaluation.init(
       autoIncrement: true,
       allowNull: false
     },
-    evaluation: {
-      type: DataTypes.TEXT,
+    traduccion: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    software:{
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   },

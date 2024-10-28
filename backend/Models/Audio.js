@@ -12,7 +12,7 @@ Audio.init(
       allowNull: false
     },
     audio: {
-      type: DataTypes.BLOB,
+      type: DataTypes.BLOB('long'),
       allowNull: false      
     },
     idKeywordFK:{
