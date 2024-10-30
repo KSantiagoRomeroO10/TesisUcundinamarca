@@ -10,11 +10,12 @@ def important():
   text = request.json['texto']
 
   doc = nlp(text)
+  
+  palabras_importantes = [token.lemma_ for token in doc]
 
-  palabras_importantes = []
-  for token in doc:
-    if token.pos_ in ['VERB', 'NOUN', 'PROPN', 'ADJ', 'ADV', 'NUM']:
-
-      palabras_importantes.append(token.lemma_)
+  # palabras_importantes = []
+  # for token in doc:
+  #   if token.pos_ in ['VERB', 'NOUN', 'PROPN', 'ADJ', 'ADV', 'NUM']:
+  #     palabras_importantes.append(token.lemma_)
 
   return jsonify(palabras_importantes), 200

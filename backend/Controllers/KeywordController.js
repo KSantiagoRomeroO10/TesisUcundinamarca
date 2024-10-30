@@ -1,4 +1,5 @@
 const KeyWord = require('../Models/Keyword')
+const Video = require('../Models/Video')
 
 const CreateKeyWord = async (req, res) => {
   try {
@@ -35,6 +36,26 @@ const GetKeyWordById = async (req, res) => {
   catch (error) {
     res.status(500).json({ error: error.message })
   }
+}
+
+const GetKeyWordByWord = async (req, res) => {
+  try {
+    const { keyWord } = req.body
+    const keyWordDB = await KeyWord.findOne({ 
+      where: { keyWord },
+      include: [{ model: Video }] 
+    })
+
+    if (keyWordDB) {
+      res.status(200).json(keyWordDB)
+    } else {
+      res.status(404).json({ error: 'KeyWord no encontrada' })
+    }
+  } 
+  catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+
 }
 
 const UpdateKeyWord = async (req, res) => {
@@ -75,4 +96,4 @@ const DeleteKeyWord = async (req, res) => {
   }
 }
 
-module.exports = { CreateKeyWord, GetKeyWords, GetKeyWordById, UpdateKeyWord, DeleteKeyWord }
+module.exports = { CreateKeyWord, GetKeyWords, GetKeyWordById, GetKeyWordByWord, UpdateKeyWord, DeleteKeyWord }

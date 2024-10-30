@@ -28,7 +28,7 @@ function App() {
     <>
       <Routes>
         {/* Ruta principal */}
-        <Route exact path="/" element={ <Home />} />
+        <Route exact path="/" element={<Home />} />
 
         {/* Ruta del Formulario */}
         <Route path="/login" element={<Formulario />} />

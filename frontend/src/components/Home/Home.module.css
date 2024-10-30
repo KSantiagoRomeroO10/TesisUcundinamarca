@@ -75,8 +75,8 @@
 
 /* Estilo para el icono del micrófono */
 .micIcon {
-  height: 10rem; /* Altura del icono de micrófono */
-  width: 10rem; /* Anchura del icono de micrófono */
+  height: 15rem; /* Altura del icono de micrófono */
+  width: 15rem; /* Anchura del icono de micrófono */
   object-fit: contain; /* Ajusta la imagen del icono para que se mantenga dentro del contenedor sin distorsión */
 }
 

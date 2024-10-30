@@ -1,9 +1,6 @@
-pip install faster-whisper
+pip install faster-whisper flask spacy
 
-pip install spacy
 python -m spacy download es_core_news_sm
-
-pip install flask
 
 ADJ: Adjetivo
 ADP: Adposición (preposición o postposición)
