@@ -2,11 +2,18 @@ const Audio = require('../Models/Audio')
 
 const CreateAudio = async (req, res) => {
   try {
-    const { audio } = req.body
-    const newAudio = await Audio.create({ audio })
-    res.status(201).json(newAudio)  // 201 Created
-  } catch (error) {
-    res.status(500).json({ error: error.message })
+    const audioData = req.file.buffer
+    const { idKeywordFK } = req.body
+    
+    const newAudio = await Audio.create({
+      audio: audioData,
+      idKeywordFK: idKeywordFK
+    })
+
+    res.status(200).json({newAudio})
+  } 
+  catch (error) {
+    res.status(500).json({Error: error})
   }
 }
 

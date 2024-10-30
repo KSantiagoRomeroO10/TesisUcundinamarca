@@ -3,17 +3,17 @@ const Video = require('../Models/Video')
 const CreateVideo = async (req, res) => {
   try {
      // Obtiene el archivo en buffer desde req.file
-     const videoData = req.file.buffer;
+     const videoData = req.file.buffer
 
      // Crea una nueva entrada en la base de datos usando Sequelize
      const newVideo = await Video.create({
         video: videoData,
      })
 
-     res.send(`Video uploaded successfully with ID: ${newVideo.idVideo}`);
+     res.status(400).json({newVideo})
   } catch (error) {
-     console.error("Error uploading video:", error);
-     res.status(500).send("Error uploading video");
+     console.error("Error uploading video:", error)
+     res.status(500).send("Error uploading video")
   }
 }
 

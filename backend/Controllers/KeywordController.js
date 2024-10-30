@@ -2,12 +2,12 @@ const KeyWord = require('../Models/Keyword')
 
 const CreateKeyWord = async (req, res) => {
   try {
-    const { keyWord, IdAudioFK, IdVideoFK } = req.body
-    const newKeyWord = await KeyWord.create({ keyWord, IdAudioFK, IdVideoFK })
-    res.status(201).json(newKeyWord)
+    const { keyWord, IdVideoFK } = req.body
+    const newKeyWord = await KeyWord.create({ keyWord, IdVideoFK })
+    res.status(201).json({newKeyWord})
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error })
   }
 }
 

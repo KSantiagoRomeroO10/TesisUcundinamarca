@@ -22,9 +22,33 @@ const CRUDVideos = () => {
       
       fetchData()
    }, [])   
-   
+
+   const deleteData = async (idVideo) => {    
+      const response = await fetch(`http://localhost:3001/video/delete/${idVideo}`, {
+        method: 'DELETE'
+      })
+      const responseDelete = await response.json()
+      console.log(responseDelete)    
+    }
+
+    const createData = async (newData) => {
+
+      const formData = new FormData()
+      formData.append('video', newData.video)
+
+      const response = await fetch(`http://localhost:3001/video/new`, {
+        method: 'POST',
+        body: formData
+      })
+      
+      const responseCreate = await response.json()
+      
+      return responseCreate
+
+    }
+
    return (
-      <CRUD rowsTitle={titles} data={data} titleButton={'Videos'} />
+      <CRUD rowsTitle={titles} data={data} titleButton={'Videos'} deleteData={deleteData} createData={createData} />
    )
 }
 

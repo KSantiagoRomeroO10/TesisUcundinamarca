@@ -58,7 +58,7 @@ const Login = () => {
           name: data.name,
         }
         updateUser(user)    
-        navigate("/crud")        
+        navigate("/crudIndex")        
       }
       else{
         setDatesWrong(true)

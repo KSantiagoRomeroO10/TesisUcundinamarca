@@ -17,7 +17,8 @@ Audio.belongsTo(Keyword,{
   foreignKey: {
     name: 'idKeywordFK',
     allowNull: false
-  }
+  },
+  onDelete: 'CASCADE'
 })
 
 Video.hasOne(Keyword, {

@@ -2,9 +2,9 @@ const Evaluation = require('../Models/Evaluation')
 
 const CreateEvaluation = async (req, res) => {
   try {
-    const { evaluation } = req.body
-    const newEvaluation = await Evaluation.create({ evaluation })
-    res.status(201).json(newEvaluation)
+    const { traduccion, software } = req.body
+    const newEvaluation = await Evaluation.create({ traduccion, software })
+    res.status(201).json({newEvaluation})
   }
   catch (error) {
     res.status(500).json({ error: error.message })
