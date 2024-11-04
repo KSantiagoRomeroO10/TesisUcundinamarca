@@ -1,4 +1,4 @@
-pip install faster-whisper flask spacy
+pip install flask spacy
 
 python -m spacy download es_core_news_sm
 
