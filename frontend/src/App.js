@@ -11,6 +11,8 @@ import CRUDKeyWords from './components/CRUDKeyWords/CRUDKeyWords'
 
 import Home from "./components/Home/Home"
 
+import Calification from "./components/Calification/Calification"
+
 import ProtectedRoute from './components/ProtectedRoutes/ProtectedRoutes'
 
 import UseUserStore from './Stores/UseUserStore'
@@ -29,6 +31,9 @@ function App() {
       <Routes>
         {/* Ruta principal */}
         <Route exact path="/" element={<Home />} />
+
+        {/* Ruta para calificar */}
+        <Route path="/calification" element={<Calification />} />
 
         {/* Ruta del Formulario */}
         <Route path="/login" element={<Formulario />} />

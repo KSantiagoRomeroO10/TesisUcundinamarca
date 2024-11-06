@@ -131,6 +131,9 @@ const Home = () => {
           <Link to="/login">
             <button className={`${Styles.btn} ${Styles.entrar}`}>Entrar</button>
           </Link>
+          <Link to="/calification">
+            <button className={`${Styles.btn} ${Styles.entrar}`}>Calificarnos</button>
+          </Link>
         </div>
       </nav>
 
