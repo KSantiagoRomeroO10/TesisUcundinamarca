@@ -1,6 +1,9 @@
 pip install flask spacy
 
 python -m spacy download es_core_news_sm
+python -m spacy download es_core_news_lg
+
+python manage.py runserver
 
 ADJ: Adjetivo
 ADP: Adposición (preposición o postposición)

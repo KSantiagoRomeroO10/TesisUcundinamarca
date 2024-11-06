@@ -5,8 +5,6 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Styles from "./Home.module.css"
 
-const vidUrl = "https://www.youtube.com/watch?v=qG1CQFiHX6c"
-
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const mic = new SpeechRecognition()
 
@@ -17,7 +15,8 @@ mic.lang = "es-ES"
 const Home = () => {
   const [isListening, setIsListening] = useState(false)
   const [notes, setNotes] = useState(null)
-  const [videoUrl, setVideoUrl] = useState(null)
+  const [videoUrls, setVideoUrls] = useState([]) // Almacena URLs de todos los videos válidos
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0) // Índice del video actual en reproducción
 
   const handleListen = () => {
     if (isListening) {
@@ -32,25 +31,19 @@ const Home = () => {
         console.log("Parar micrófono")
 
         const response = await handleWordImportant()
-        console.log(response)
 
+        // Obtiene los videos y omite los que no existen
         const response2 = await Promise.all(
           response.map(async (word) => {
-            console.log(word.toLowerCase())
-            return await handleWordVideo(word.toLowerCase())
+            const result = await handleWordVideo(word)
+            return result?.IdVideoFK ? result.video.video.data : null // Solo devuelve datos si existen
           })
         )
 
-        const result = Array.from(
-          new Map(
-            response2
-              .filter((item) => item.IdVideoFK)
-              .map((item) => [item.IdVideoFK, item])
-          ).values()
-        )
+        // Filtrar y procesar solo videos válidos
+        const videoData = response2.filter((data) => data !== null)
 
-        // Obtener datos del video y mostrarlo usando la lógica de `VideoShow`
-        VideoShow(result[0].video.video.data)
+        VideoShow(videoData) // Pasar solo videos válidos a VideoShow
       }
     }
     mic.onstart = () => {
@@ -60,26 +53,24 @@ const Home = () => {
       const transcript = Array.from(event.results)
         .map((result) => result[0])
         .map((result) => result.transcript)
-        .join("")
+        .join("")      
       setNotes(transcript)
     }
     mic.onerror = (event) => console.log(event.error)
   }
 
-  const VideoShow = (data) => {
-    // Revocar la URL anterior si existe
-    if (videoUrl) {
-      URL.revokeObjectURL(videoUrl)
-    }
-    // Crear una nueva URL para el Blob
-    const url = URL.createObjectURL(new Blob([Uint8Array.from(data)], { type: "video/mp4" }))
-    setVideoUrl(url)
+  const VideoShow = (videos) => {
+    // Revocar todas las URL anteriores si existen
+    videoUrls.forEach(url => URL.revokeObjectURL(url))
+    
+    // Crear una nueva URL para cada Blob de video y almacenarlas en el estado
+    const urls = videos.map((data) => URL.createObjectURL(new Blob([Uint8Array.from(data)], { type: "video/mp4" })))
+    setVideoUrls(urls)
+    setCurrentVideoIndex(0) // Iniciar desde el primer video
   }
 
-  const handleWordImportant = async () => {
-    console.log(notes)
-    
-    const response = await fetch(`http://localhost:5000/important`, {
+  const handleWordImportant = async () => {    
+    const response = await fetch(`http://localhost:8000/djangoaplication/extraer_palabras/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,8 +78,9 @@ const Home = () => {
       body: JSON.stringify({ texto: notes }),
     })
     const responseCreate = await response.json()
-
-    return responseCreate
+    console.log(responseCreate)
+    
+    return responseCreate.palabras_importantes
   }
 
   const handleWordVideo = async (keyWord) => {
@@ -101,7 +93,8 @@ const Home = () => {
     })
     const responseCreate = await response.json()
 
-    return responseCreate
+    // Devuelve el objeto si tiene video; en caso contrario, null
+    return responseCreate?.IdVideoFK ? responseCreate : null
   }
 
   useEffect(() => {
@@ -109,12 +102,23 @@ const Home = () => {
 
     return () => {
       mic.stop()
-      // Revocar la URL del video cuando el componente se desmonte
-      if (videoUrl) {
-        URL.revokeObjectURL(videoUrl)
-      }
+      // Revocar las URL de los videos cuando el componente se desmonte
+      videoUrls.forEach(url => URL.revokeObjectURL(url))
     }
   }, [isListening])
+
+  useEffect(() => {
+    console.log(notes)    
+  }, [notes])
+
+  // Manejar el cambio de video cuando el actual termina
+  const handleVideoEnd = () => {
+    if (currentVideoIndex < videoUrls.length - 1) {
+      setCurrentVideoIndex(currentVideoIndex + 1) // Cambia al siguiente video
+    } else {
+      console.log("Se acabaron los videos.")
+    }
+  }
 
   return (
     <div className={Styles.home}>
@@ -137,20 +141,17 @@ const Home = () => {
           </IconButton>
         </div>
         <div className={Styles.video}>
-          {videoUrl ? (
-            <video controls width="400" autoPlay>
-              <source src={videoUrl} type="video/mp4" />
-            </video>
+          {videoUrls.length > 0 ? (
+            <video
+              controls
+              width="400"
+              autoPlay
+              src={videoUrls[currentVideoIndex]}
+              onEnded={handleVideoEnd} // Llamar a handleVideoEnd cuando el video termine
+            />
           ) : (
-            <p>Esperndo audio...</p>
+            <p>Esperando audio...</p>
           )}
-          {/* <ReactPlayer
-            url={videoUrl || vidUrl}
-            playing={false}
-            volume={0.5}
-            width="400px"
-            height="350px"
-          /> */}
         </div>
       </div>
     </div>
@@ -158,3 +159,4 @@ const Home = () => {
 }
 
 export default Home
+

@@ -25,7 +25,7 @@ const Routes = require('./Routes/Index')
 const SynchronizeDB = require('./Models/Config/SynchronizeDB')
 const { CreatedDB, CreateTables } = SynchronizeDB()
 
-const StartPythonAPI = require('./ApiPython/StartPythonAPI')
+const StartDjango = require('./djangoapi/StartDjango')
 
 const Server = Express()
 
@@ -45,11 +45,11 @@ const startServer = async () => {
     await CreatedDB()
     await CreateTables()
     try{
-      const result = await StartPythonAPI() 
-      console.log(result);
+      const result = await StartDjango() 
+      console.log(result)
     }
     catch(error){
-      console.log(error);
+      console.log(error)
     }
     console.log(`Servidor escuchando en el puerto ${Port}.`)
   })

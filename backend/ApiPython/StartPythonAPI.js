@@ -35,7 +35,8 @@ const startPythonAPI = () => {
         reject(`Error accediendo a la API de Python: ${error.message}`)
       }
     }
-    setTimeout(checkAPI, 3000)
+    console.log('Iniciando la api de python por favor espere.')
+    setTimeout(checkAPI, 15000)
   })
 }
 
