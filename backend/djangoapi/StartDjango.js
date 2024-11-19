@@ -24,11 +24,11 @@ const startDjangoAPI = () => {
     // Función para verificar si la API de Django está accesible
     const checkAPI = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/admin') // Prueba con una ruta que sepas que existe
+        const response = await axios.get('http://localhost:8000/admin') 
         if (response.status === 200) {
           resolve('Proceso de Django iniciado y API accesible.')
         } else {
-          reject('Error desde la API de Django en la ruta http://localhost:8000/admin.')
+          reject('Error desde la API de Django en la ruta http://localhost:8000/admin')
         }
       } catch (error) {
         reject(`Error accediendo a la API de Django: ${error.message}`)

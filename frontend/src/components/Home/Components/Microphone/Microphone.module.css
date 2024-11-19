@@ -1,0 +1,41 @@
+.micContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.micButton {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.micButton:hover {
+  transform: scale(1.1);
+}
+
+.micIcon {
+  width: 100px;
+  height: 170px;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.notes {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  width: 380px;
+  overflow-y: auto;
+  text-align: left;
+  font-size: 20px;
+}
+
+.notes h2{
+  text-align: center;
+}

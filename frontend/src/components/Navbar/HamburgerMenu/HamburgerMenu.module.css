@@ -1,0 +1,77 @@
+/* Contenedor principal */
+.hamburgerMenu {
+  position: relative;
+}
+
+/* Ícono del menú */
+.hamburgerIcon {
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #333;
+}
+
+/* Menú desplegable */
+.dropdownMenu {
+  position: absolute;
+  top: 80px;
+  right: 35px;
+  background: #fff;
+  width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 10;
+}
+
+/* Lista del menú */
+.dropdownMenu ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+}
+
+/* Elementos de la lista */
+.dropdownMenu li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.dropdownMenu li:last-child {
+  border-bottom: none;
+}
+
+/* Enlaces del menú */
+.menuLink {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  display: block;
+}
+
+/* Estilo del enlace activo */
+.menuLink.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Efecto hover */
+.menuLink:hover {
+  color: #0056b3;
+}
+
+@media(min-width: 600px) and (max-width: 700px) {
+  .dropdownMenu{
+    top: 170px;
+    left: 35px;
+    right: 0;
+  }
+}
+
+@media(max-width: 600px) {
+  .dropdownMenu{
+    top: 225px;
+    left: 40px;
+    right: 0;
+  }
+}

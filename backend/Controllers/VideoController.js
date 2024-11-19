@@ -11,9 +11,10 @@ const CreateVideo = async (req, res) => {
      })
 
      res.status(400).json({newVideo})
-  } catch (error) {
+  } 
+  catch (error) {
      console.error("Error uploading video:", error)
-     res.status(500).send("Error uploading video")
+     res.status(500).json({"Error uploading video": error})
   }
 }
 

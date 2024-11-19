@@ -1,110 +1,39 @@
-.home {
-  display: flex; 
-  flex-direction: column; /* Coloca los elementos en columna */
-  align-items: center; /* Centra los elementos horizontalmente en el contenedor */
-  justify-content: center; /* Centra los elementos verticalmente en el contenedor */
-  height: 100vh; /* La altura de la página es del 100% de la ventana del navegador */
-  background: url("../../images/fondo2.gif");
-  text-align: center; 
-}
-
-.titulo {
-  font-size: 2.5rem; /* Tamaño de fuente grande para destacar el título */
-  margin: 0;
-}
-
-/* Estilo del contenedor principal */
-.contenedor {
-  display: flex; /* flexbox para la disposición de los botones y el micrófono */
-  flex-direction: row; /* Coloca los elementos hijos en fila (horizontalmente) */
-  align-items: center; /* Alinea los elementos en el centro verticalmente */
-  text-align: center; /* Centra el texto dentro de los elementos */
-  margin-top: 20px; /* Añade espacio en la parte superior del contenedor */
-  width: 800px; /* Anchura del contenedor */
-  height: 500px; /* Altura del contenedor */
-  background-color: rgb(238, 233, 233); /* Fondo blanco para el contenedor */
-  opacity: 1;
-  justify-content: space-around; /* Distribuye los botones de manera uniforme */
-  border-radius: 20px;
-}
-
-/* Estilo general para los botones */
-.btn {
-  font-family: 'Fredoka One', cursive; /* Fuente personalizada para los botones */
-  font-size: 30px; /* Tamaño grande de la fuente */
-  padding: 10px 10px; /* Espacio interno del botón (arriba-abajo y derecha-izquierda) */
-  border-radius: 20px; /* Bordes redondeados para los botones */
-  border: none; /* Sin borde */
-  cursor: pointer; /* El puntero cambia a mano cuando se pasa sobre el botón */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Sombra para darle un efecto de elevación */
-  transition: all 0.3s ease; /* Transición suave para los cambios de estado (hover, active) */
-  color: white; /* Texto blanco */
-  margin: 0 10px; /* Espaciado horizontal entre los botones */
-}
-
-
-/* Estilo específico para el botón de "Instrucciones" */
-.instruccion {
-  background-color: #2ad35c; /* Color de fondo azul */
-  color: white; /* Color del texto en blanco */
-}
-
-.instruccion:hover {
-  background-color: #06f76a; /* Color de fondo cuando se pasa el mouse */
-}
-
-.entrar{
-  background-color: rgb(64, 203, 238);
-  color: rgb(255, 255, 255);
-}
-
-.entrar:hover {
-  background-color: #3bf5f5; /* Color de fondo cuando se pasa el mouse */
-}
-
-/* Efecto hover en los botones */
-.btn:hover {
-  transform: translateY(-10px); /* Mueve el botón hacia arriba cuando se pasa el ratón por encima */
-  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2); /* Aumenta la sombra para un efecto elevado */
-}
-
-/* Estilo para el contenedor del icono de micrófono */
-.microfono {
-  margin: 10 0px; /* Espaciado horizontal para separar el micrófono de los otros elementos */
-}
-
-/* Estilo para el icono del micrófono */
-.micIcon {
-  height: 15rem; /* Altura del icono de micrófono */
-  width: 15rem; /* Anchura del icono de micrófono */
-  object-fit: contain; /* Ajusta la imagen del icono para que se mantenga dentro del contenedor sin distorsión */
-}
-
-
-/* Estilos generales */
-body, html {
-  margin: 0;
-  padding: 0;
-}
-
-.navbar {
+.Container {
+  margin: auto;
+  margin-top: 20px;
+  padding: 25px;
+  border-radius: 5px;
+  background-color: #eee9e9;
   display: flex;
-  justify-content: space-between; /* Alinea elementos a los extremos */
+  justify-content: space-between;
+  max-width: 800px;
+}
+
+.Microphone {
+  flex: 1;
+  width: 400px;
+}
+
+.Video {
+  flex: 1;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  background-color: #701154;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0;
+  width: 400px;
 }
 
-.navbarLogo h1 {
-  color: white;
-  text-align: center; /* Centra el texto dentro del contenedor */
-}
 
-/* Contenedor de botones */
-.navbarButtons {
-  display: flex;
-  gap: 10px; /* Espaciado entre los botones */
+/* Media query para pantallas pequeñas */
+@media (max-width: 1000px) {
+  .Container {
+    max-width: 400px;
+    flex-direction: column; /* Cambia la dirección del contenedor a columna */
+    align-items: center; /* Centra los elementos de forma vertical */
+  }
+
+  .Microphone, .Video {
+    flex: none; /* Evita que los elementos crezcan demasiado */
+    width: 100%; /* Hace que los elementos ocupen todo el ancho disponible */
+    margin: 10px 0; /* Da un poco de espacio entre los elementos */
+  }
 }
