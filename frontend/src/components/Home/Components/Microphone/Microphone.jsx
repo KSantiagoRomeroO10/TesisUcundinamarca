@@ -12,7 +12,6 @@ const { mic, isSupported } = useSpeechRecognition({ lang: "es-ES" })
 
 const Microphone = ({ notes, setNotes }) => {
   const [isListening, setIsListening] = useState(false)
-  // const [notes, setNotes] = useState(null)
 
   useEffect(() => {
     if (isSupported) HandleListen(mic, isListening, setNotes, setIsListening)

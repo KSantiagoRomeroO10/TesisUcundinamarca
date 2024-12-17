@@ -2,6 +2,10 @@ const Video = require('../Models/Video')
 
 const CreateVideo = async (req, res) => {
   try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No se recibió ningún archivo. Asegúrate de usar 'video' como key." })
+    }
+    
      // Obtiene el archivo en buffer desde req.file
      const videoData = req.file.buffer
 
@@ -13,8 +17,7 @@ const CreateVideo = async (req, res) => {
      res.status(400).json({newVideo})
   } 
   catch (error) {
-     console.error("Error uploading video:", error)
-     res.status(500).json({"Error uploading video": error})
+     res.status(500).json({"Error uploading video": error.message})
   }
 }
 
@@ -22,7 +25,8 @@ const GetVideos = async (req, res) => {
   try {
     const videos = await Video.findAll()
     res.status(200).json(videos)
-  } catch (error) {
+  }
+  catch (error) {
     res.status(500).json({ error: error.message })
   }
 }
@@ -33,10 +37,12 @@ const GetVideoById = async (req, res) => {
     const video = await Video.findByPk(id)
     if (video) {
       res.status(200).json(video)
-    } else {
+    }
+    else {
       res.status(404).json({ error: 'Video no encontrado' })
     }
-  } catch (error) {
+  }
+  catch (error) {
     res.status(500).json({ error: error.message })
   }
 }
@@ -50,10 +56,12 @@ const UpdateVideo = async (req, res) => {
       existingVideo.video = video
       await existingVideo.save()
       res.status(200).json(existingVideo)
-    } else {
+    }
+    else {
       res.status(404).json({ error: 'Video no encontrado' })
     }
-  } catch (error) {
+  }
+  catch (error) {
     res.status(500).json({ error: error.message })
   }
 }
@@ -65,10 +73,12 @@ const DeleteVideo = async (req, res) => {
     if (video) {
       await video.destroy()
       res.status(200).json({ message: 'Video eliminado' })
-    } else {
+    }
+    else {
       res.status(404).json({ error: 'Video no encontrado' })
     }
-  } catch (error) {
+  }
+  catch (error) {
     res.status(500).json({ error: error.message })
   }
 }

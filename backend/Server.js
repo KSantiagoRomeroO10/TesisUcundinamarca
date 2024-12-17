@@ -32,7 +32,7 @@ const Server = Express()
 Server.use(Express.json())
 
 Server.use(Cors({
-  origin: ['http://localhost:3000'],
+  origin: ['*'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 
