@@ -1,0 +1,47 @@
+.Container{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eee9e9;
+  max-width: fit-content;
+  padding: 25px 30px;
+  border-radius: 5px;
+}
+
+.Subtitle{
+  font-weight: 100;
+  float: left;
+}
+
+.Stars{
+  margin: 5px;
+  padding: 10px;
+  font-weight: normal;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #bbbbbb;
+}
+
+.StarsFocus{
+  background-color: #40cbee;
+  color: white;
+}
+
+.Button{
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  border: none;
+}
+
+.ButtonActive{
+  background-color: #bbbbbb;
+  cursor: not-allowed;
+}
+
+.ButtonNoActive{
+  background-color: #4CAF50;
+  cursor: pointer;
+}

@@ -32,7 +32,7 @@ const Server = Express()
 Server.use(Express.json())
 
 Server.use(Cors({
-  origin: ['*'],
+  origin: ['http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 

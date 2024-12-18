@@ -1,4 +1,4 @@
-.navbar{
+.Navbar{
   display: inline-block;
   width: 100%;
   margin-top: 20px;
@@ -6,21 +6,21 @@
   box-shadow: 0px 2px 5px #00000033;
 }
 
-.navbar button{
+.Navbar button{
   background-color: #40cbee;
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
   margin: 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   cursor: pointer;
   float: right;
   font-size: 25px;
 }
 
-.navbar h1{
+.Navbar h1{
   float: left;
   margin: 20px;
   color: white;
@@ -28,7 +28,7 @@
 }
 
 @media (max-width: 700px) {
-  .navbar button, .navbar h1{
+  .Navbar button, .Navbar h1{
     float: left;
   }
 }

@@ -2,10 +2,8 @@ import { useState, useEffect } from "react"
 import Styles from "./Video.module.css"
 
 const Video = ({ notes }) => {
-  const [videoUrls, setVideoUrls] = useState([]) // URLs de los videos
+  const [videoUrls, setVideoUrls] = useState([]) // URLs de los videos y palabras no encontradas
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0) // Índice del video actual
-  const [notFoundWords, setNotFoundWords] = useState([]) // Palabras que no tienen video
-  const [currentNotFoundIndex, setCurrentNotFoundIndex] = useState(0) // Índice de la palabra no encontrada actual
 
   // Procesa las palabras importantes a partir de notes
   const handleWordImportant = async () => {
@@ -32,76 +30,71 @@ const Video = ({ notes }) => {
   // Procesa los videos obtenidos a partir de palabras importantes
   const fetchVideos = async () => {
     const words = await handleWordImportant()
-    const videos = []
-    const notFound = []
+    const videosAndWords = []
 
     for (const word of words) {
       const videoData = await handleWordVideo(word)
       if (videoData) {
         const videoUrl = URL.createObjectURL(new Blob([Uint8Array.from(videoData)], { type: "video/mp4" }))
-        videos.push(videoUrl)
+        videosAndWords.push({ type: "video", url: videoUrl })
       } else {
-        notFound.push(word) // Guarda las palabras sin video
+        videosAndWords.push({ type: "word", word }) // Guarda la palabra como "no encontrada"
       }
     }
 
-    setVideoUrls(videos)
-    setNotFoundWords(notFound)
-    setCurrentVideoIndex(0)
-    setCurrentNotFoundIndex(0) // Reiniciar índice de palabras no encontradas
+    setVideoUrls(videosAndWords)
+    setCurrentVideoIndex(0) // Reinicia el índice
   }
 
-  // Cambia al siguiente video al terminar el actual
-  const handleVideoEnd = () => {
+  // Cambia al siguiente video o palabra al terminar el actual
+  const handleNext = () => {
     if (currentVideoIndex < videoUrls.length - 1) {
       setCurrentVideoIndex((prevIndex) => prevIndex + 1)
     } else {
-      console.log("Todos los videos han sido reproducidos.")
+      console.log("Todos los elementos han sido mostrados.")
+      setVideoUrls([]) // Limpia la lista de videos y palabras
+      setCurrentVideoIndex(0) // Reinicia el índice
     }
   }
-
-  // Manejo de transición entre palabras no encontradas
-  useEffect(() => {
-    let timer
-    if (notFoundWords.length > 0 && currentNotFoundIndex < notFoundWords.length) {
-      timer = setTimeout(() => {
-        setCurrentNotFoundIndex((prevIndex) => prevIndex + 1)
-      }, 2500)
-    }
-    return () => clearTimeout(timer)
-  }, [currentNotFoundIndex, notFoundWords])
 
   useEffect(() => {
     if (notes) {
       fetchVideos()
     }
     return () => {
-      videoUrls.forEach((url) => URL.revokeObjectURL(url)) // Limpia las URLs
+      videoUrls
+        .filter((item) => item.type === "video")
+        .forEach((item) => URL.revokeObjectURL(item.url)) // Limpia las URLs
     }
   }, [notes])
 
   return (
     <div className={Styles.videoContainer}>
       {videoUrls.length > 0 ? (
-        <video
-          controls
-          width="400"
-          autoPlay
-          src={videoUrls[currentVideoIndex]}
-          onEnded={handleVideoEnd}
-        />
-      ) : (
-        <div>
-          {notFoundWords.length > 0 && currentNotFoundIndex < notFoundWords.length ? (
+        <>
+          {videoUrls[currentVideoIndex].type === "video" ? (
+            <video
+              controls
+              width="400"
+              autoPlay
+              src={videoUrls[currentVideoIndex].url}
+              onEnded={handleNext}
+            />
+          ) : (
             <div>
-              <h1>La palabra <span className={Styles.Palabra}>{notFoundWords[currentNotFoundIndex]}</span> no encontrada</h1>
+              <h1>
+                La palabra <span className={Styles.Palabra}>{videoUrls[currentVideoIndex].word}</span> no tiene video.
+              </h1>
               <br />
               <button className={Styles.ButtonRecomendar}>Recomendar Palabra</button>
+              <button onClick={handleNext} className={Styles.ButtonRecomendar}>
+                Siguiente
+              </button>
             </div>
-          ) : (
-            <h1>Esperando audio...</h1>
           )}
-        </div>
+        </>
+      ) : (
+        <h1>Esperando audio...</h1>
       )}
     </div>
   )
