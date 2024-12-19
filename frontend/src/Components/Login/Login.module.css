@@ -1,0 +1,33 @@
+.Container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eee9e9;
+  padding: 30px 60px;
+  border-radius: 5px;
+}
+
+.Formulario{
+  margin: 20px;
+}
+.Formulario input{
+  margin: 10px;
+  padding: 10px;
+  width: 275px;
+  border-radius: 5px;
+  border: none;
+}
+.Formulario button{
+  margin-top: 10px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #40cbee;
+  cursor: pointer;
+}
+
+.Container h1{
+  color: #1877f2;
+  font-size: 45px;
+}
