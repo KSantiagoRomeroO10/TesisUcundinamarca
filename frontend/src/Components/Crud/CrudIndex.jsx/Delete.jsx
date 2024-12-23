@@ -1,17 +1,31 @@
 import Styles from './Delete.module.css'
 import { useState } from "react"
 
-const Delete = ({ endPointDelete, id }) => {
+const Delete = ({ endPointDelete, id, data, setData }) => {
 
   const [open, setOpen] = useState(false)
 
   const handlerDeleteData = async () => {    
-    const response = await fetch(`${endPointDelete}/${id}`, {
-      method: 'DELETE'
-    })
-    const responseDelete = await response.json()
-    setOpen(false)
-    console.log(responseDelete)
+    try {
+      const response = await fetch(`${endPointDelete}/${id}`, {
+        method: 'DELETE'
+      })
+      
+      if (!response.ok) {
+        throw new Error("Error al eliminar el elemento.")
+      }
+
+      const responseDelete = await response.json()
+
+      const updatedData = data.filter(item => item.id !== id)
+      setData(updatedData)
+
+      setOpen(false)
+      console.log(responseDelete)
+    } 
+    catch (error) {
+      console.error("Error eliminando el elemento:", error)
+    }
   }
 
   const handlerOpen = () => {

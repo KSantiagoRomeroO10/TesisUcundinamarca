@@ -1,9 +1,31 @@
 import Styles from "./Read.module.css"
 import Delete from "./Delete"
+import { useEffect, useState } from "react"
 
-const Read = ({ columns, data, endPointRead, endPointDelete }) => {
+const Read = ({ columns, endPointRead, endPointDelete }) => {
+  
+  const [data, setData] = useState([])
 
-  // Leer desde acá
+  const ReadData = async() => {
+    const response = await fetch(`${endPointRead}`, {
+      method: 'GET'
+    })
+    const responseRead = await response.json()
+    const filteredData = responseRead.map((item) => {
+      const idKey = Object.keys(item).find((key) =>
+        key.toLowerCase().includes("id")
+      )
+      return {
+        id: item[idKey],
+        ...item
+      }
+    })
+    setData(filteredData)
+  }
+
+  useEffect(() => {
+    ReadData()
+  }, [])
 
   return (
     <div className={Styles.TableContainer}>
@@ -30,7 +52,7 @@ const Read = ({ columns, data, endPointRead, endPointDelete }) => {
                 </td>
               ))}
               <td className={Styles.TableCell}>
-                <Delete endPointDelete={endPointDelete} id={row.id} />
+                <Delete endPointDelete={endPointDelete} id={row.id} data={data} setData={setData} />
               </td>
               <td className={Styles.TableCell}>Actualizar</td>
             </tr>
