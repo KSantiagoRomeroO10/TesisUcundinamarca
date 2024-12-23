@@ -1,0 +1,37 @@
+.Button{
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.Button1{
+  margin: 10px;
+}
+.ContainerSpam{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #00000083;
+  width: 100vw;
+  height: 100vh;
+}
+.SubContainer{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eee9e9;
+  padding: 20px;
+  border-radius: 5px;
+}
+.Cancel{
+  background-color: #40cbee;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}

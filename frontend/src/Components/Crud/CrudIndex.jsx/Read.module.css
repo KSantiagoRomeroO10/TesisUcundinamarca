@@ -1,0 +1,40 @@
+/* Read.css */
+
+.TableContainer {
+  margin: auto;
+  width: 90vw;
+  margin-bottom: 25px;
+}
+
+.CustomTable {
+  border-collapse: collapse;
+  margin: auto;
+  width: 80%;
+}
+
+.TableHeader {
+  border: 1px solid #ddd;
+  padding: 8px;
+  background-color: #701154;
+  color: white;
+  text-align: left;
+}
+
+.TableCell {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.TableRowEven {
+  background-color: #c0c0c0;
+}
+
+.TableRowOdd {
+  background-color: #d4d4d4;
+}
+
+/* Efecto hover */
+.TableRowEven:hover, 
+.TableRowOdd:hover {
+  background-color: #a0a0a0;
+}

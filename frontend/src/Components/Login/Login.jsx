@@ -1,6 +1,7 @@
 import Styles from "./Login.module.css"
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+
 import UseUserStore from "../../Stores/UseUserStore"
 
 const Login = () => {
@@ -8,18 +9,19 @@ const Login = () => {
   const [nombre, setNombre] = useState("")
   const [contraseña, setContraseña] = useState("")
   const [errorEmpty, setErrorEmpty] = useState(false)
-  const [notFound, setuserNotFound] = useState(false)
+  const [notFound, setUserNotFound] = useState(false)
 
   const navigate = useNavigate()
   
   const updateUser = UseUserStore((state) => state.updateUser)
-  const user1 = UseUserStore((state) => state.user)
+  // const user1 = UseUserStore((state) => state.user)
 
   const handleForm = async (event) => {
     event.preventDefault()
 
     if(nombre === '' && contraseña === '') {
       setErrorEmpty(true)
+      setUserNotFound(false)
       return
     }
     setErrorEmpty(false)
@@ -27,7 +29,7 @@ const Login = () => {
     await fetch(`http://localhost:3001/user/get/name/${nombre}`)
       .then(response => {
         if(response.status === 404) {
-          setuserNotFound(true)
+          setUserNotFound(true)
           return
         }
         if (!response.ok) {
@@ -42,8 +44,8 @@ const Login = () => {
             email: data.email,
             name: data.name
           }
-          updateUser(user)          
-          navigate("/CrudIndex")        
+          updateUser(user)
+          navigate("/CrudIndex")
         }
       })
       .catch(error => {
@@ -72,8 +74,10 @@ const Login = () => {
         />
         <br />
         <button type="submit">Iniciar sesión</button>
-        {errorEmpty && <p>Todos los campos son obligatorios.</p>}
-        {notFound && <p>Usuario no encontrado.</p>}
+        <br />
+        <br />
+        {errorEmpty && <p className={Styles.Error}>Todos los campos son obligatorios.</p>}
+        {notFound && <p className={Styles.Error}>Usuario no encontrado.</p>}
       </form>
     </section>
   )
