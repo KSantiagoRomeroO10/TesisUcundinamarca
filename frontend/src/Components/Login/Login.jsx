@@ -1,5 +1,5 @@
 import Styles from "./Login.module.css"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import UseUserStore from "../../Stores/UseUserStore"

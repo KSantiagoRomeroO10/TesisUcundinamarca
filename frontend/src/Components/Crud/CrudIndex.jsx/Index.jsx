@@ -1,13 +1,12 @@
 import Read from "./Read"
 
-const Index = ({ columns, data, endPoints }) => {
-  console.log(columns, data)
+const Index = ({ columns, endPoints }) => {
   
   const { endPointDelete, endPointRead } = endPoints
 
   return (
     <div>
-      <Read columns={columns} data={data} endPointRead={endPointRead} endPointDelete={endPointDelete} />
+      <Read columns={columns} endPointRead={endPointRead} endPointDelete={endPointDelete} />
     </div>
   )
 }

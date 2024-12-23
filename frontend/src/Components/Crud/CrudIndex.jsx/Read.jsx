@@ -15,11 +15,13 @@ const Read = ({ columns, endPointRead, endPointDelete }) => {
       const idKey = Object.keys(item).find((key) =>
         key.toLowerCase().includes("id")
       )
+      const { [idKey]: id, ...rest } = item
       return {
-        id: item[idKey],
-        ...item
+        id,
+        ...rest
       }
     })
+    console.log(filteredData)    
     setData(filteredData)
   }
 

@@ -8,6 +8,7 @@ const Users = () => {
   const endPoints = {
     endPointRead: 'http://localhost:3001/user/get',
     endPointDelete: 'http://localhost:3001/user/delete',
+    endPointUpdate: 'http://localhost:3001/user/update',
     endPointNew: 'http://localhost:3001/user/new'
   }
   
