@@ -13,6 +13,9 @@ import ProtectedRoute from './Components/ProtectedRoutes/ProtectedRoutes'
 import UseUserStore from "./Stores/UseUserStore"
 
 import CrudUsers from './Components/Crud/CrudUsers/Users'
+import CrudEvaluation from './Components/Crud/CrudEvaluations/Evaluations'
+import CrudKeywords from './Components/Crud/CrudKeywords/Keywords'
+import CrudVideos from './Components/Crud/CrudVideos/Videos'
 
 function App() {
 
@@ -32,7 +35,7 @@ function App() {
         <Route exact path="/Calificarnos" element={<RateUs />} />
         
         <Route element={<ProtectedRoute IsAllowed={ValidUser} />}>
-          <Route exact path="/CrudIndex" element={<CrudUsers />} />
+          <Route exact path="/CrudIndex" element={<CrudVideos />} />
         </Route>
       </Routes>
     </div>

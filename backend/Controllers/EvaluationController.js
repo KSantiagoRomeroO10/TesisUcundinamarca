@@ -7,7 +7,10 @@ const CreateEvaluation = async (req, res) => {
     res.status(201).json({newEvaluation})
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    return res.status(500).json({
+      error: 'Error interno del servidor',
+      details: error.message,
+    })
   }
 }
 
@@ -17,7 +20,10 @@ const GetEvaluations = async (req, res) => {
     res.status(200).json(evaluations)
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    return res.status(500).json({
+      error: 'Error interno del servidor',
+      details: error.message,
+    })
   }
 }
 
@@ -33,17 +39,21 @@ const GetEvaluationById = async (req, res) => {
     }
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    return res.status(500).json({
+      error: 'Error interno del servidor',
+      details: error.message,
+    })
   }
 }
 
 const UpdateEvaluation = async (req, res) => {
   try {
     const { id } = req.params
-    const { evaluation } = req.body
+    const { traduccion, software } = req.body
     const existingEvaluation = await Evaluation.findByPk(id)
     if (existingEvaluation) {
-      existingEvaluation.evaluation = evaluation
+      existingEvaluation.traduccion = traduccion
+      existingEvaluation.software = software
       await existingEvaluation.save()
       res.status(200).json(existingEvaluation)
     }
@@ -52,7 +62,10 @@ const UpdateEvaluation = async (req, res) => {
     }
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    return res.status(500).json({
+      error: 'Error interno del servidor',
+      details: error.message,
+    })
   }
 }
 
@@ -69,7 +82,10 @@ const DeleteEvaluation = async (req, res) => {
     }
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    return res.status(500).json({
+      error: 'Error interno del servidor',
+      details: error.message,
+    })
   }
 }
 

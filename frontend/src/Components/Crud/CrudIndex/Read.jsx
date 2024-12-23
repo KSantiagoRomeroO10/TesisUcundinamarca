@@ -5,11 +5,13 @@ import Update from "./Update"
 
 import { useEffect, useState } from "react"
 
-const Read = ({ columns, endPointRead, endPointDelete }) => {
-  
-  const [data, setData] = useState([])
+const Read = ({ columns, endPointUpdate, endPointRead, endPointDelete }) => {
 
-  const ReadData = async() => {
+  const [data, setData] = useState([])
+  const [videoUrl, setVideoUrl] = useState("")
+  const [activeVideoId, setActiveVideoId] = useState(null)
+
+  const ReadData = async () => {
     const response = await fetch(`${endPointRead}`, {
       method: 'GET'
     })
@@ -30,6 +32,21 @@ const Read = ({ columns, endPointRead, endPointDelete }) => {
   useEffect(() => {
     ReadData()
   }, [])
+
+  const handleVideoShow = (data, id) => {
+    if (!data || data.length === 0) {
+      console.error('El video no está disponible');
+      return;
+    }
+
+    if (videoUrl) {
+      URL.revokeObjectURL(videoUrl);
+    }
+
+    const url = URL.createObjectURL(new Blob([Uint8Array.from(data)]));
+    setVideoUrl(url);
+    setActiveVideoId(id);
+  }
 
   return (
     <div className={Styles.TableContainer}>
@@ -52,14 +69,26 @@ const Read = ({ columns, endPointRead, endPointDelete }) => {
             >
               {columns.map((column, colIndex) => (
                 <td key={colIndex} className={Styles.TableCell}>
-                  {row[column]}
+                  {column.toLowerCase().includes("video") ? (
+                    activeVideoId === row.id ? (
+                      <video controls width="400" autoPlay>
+                        <source src={videoUrl} type="video/mp4" />
+                      </video>
+                    ) : (
+                      <button onClick={() => handleVideoShow(row[column], row.id)}>
+                        Ver Video
+                      </button>
+                    )
+                  ) : (
+                    row[column]
+                  )}
                 </td>
               ))}
               <td className={Styles.TableCell}>
                 <Delete endPointDelete={endPointDelete} id={row.id} data={data} setData={setData} />
               </td>
               <td className={Styles.TableCell}>
-                <Update id={row.id} data={data} setData={setData} />
+                <Update endPointUpdate={endPointUpdate} columns={columns} id={row.id} data={data} setData={setData} />
               </td>
             </tr>
           ))}

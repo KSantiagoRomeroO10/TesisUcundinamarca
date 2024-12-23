@@ -40,7 +40,7 @@ Server.use(Routes)
 
 const Port = 3001
 
-const startServer = async () => {
+const startServer = () => {
   Server.listen(Port, async () => {
     await CreatedDB()
     await CreateTables()

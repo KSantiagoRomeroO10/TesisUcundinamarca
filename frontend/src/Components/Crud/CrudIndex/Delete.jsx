@@ -20,7 +20,7 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
       const deleteData = data.filter(item => item.id !== id)
       setData(deleteData)
 
-      setOpen(false)
+      handleOpen()
       console.log(responseDelete)
     } 
     catch (error) {
@@ -42,9 +42,9 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
           <h2>Eliminar</h2>
           <br />
           <p>¿Está seguro de que desea eliminar?</p>
-          <br />
-          <button className={Styles.Cancel} onClick={handleOpen}>Cancelar</button>
+          <br />          
           <button className={`${Styles.Button} ${Styles.Button1}`} onClick={handlerDeleteData}>Eliminar</button>
+          <button className={Styles.Cancel} onClick={handleOpen}>Cancelar</button>
         </div>        
       </div>
       )}

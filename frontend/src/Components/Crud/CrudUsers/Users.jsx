@@ -1,5 +1,5 @@
 import Styles from './Users.module.css'
-import Index from '../CrudIndex.jsx/Index'
+import Index from '../CrudIndex/Index'
 
 const Users = () => {
 
