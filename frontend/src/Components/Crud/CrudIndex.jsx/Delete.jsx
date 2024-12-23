@@ -17,8 +17,8 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
 
       const responseDelete = await response.json()
 
-      const updatedData = data.filter(item => item.id !== id)
-      setData(updatedData)
+      const deleteData = data.filter(item => item.id !== id)
+      setData(deleteData)
 
       setOpen(false)
       console.log(responseDelete)
@@ -28,13 +28,13 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
     }
   }
 
-  const handlerOpen = () => {
+  const handleOpen = () => {
     setOpen(!open)
   }
 
   return (
     <div>
-      <button className={Styles.Button} onClick={handlerOpen}>Eliminar</button>
+      <button className={Styles.Button} onClick={handleOpen}>Eliminar</button>
       
       {open && (
       <div className={Styles.ContainerSpam}>
@@ -43,7 +43,7 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
           <br />
           <p>¿Está seguro de que desea eliminar?</p>
           <br />
-          <button className={Styles.Cancel} onClick={handlerOpen}>Cancelar</button>
+          <button className={Styles.Cancel} onClick={handleOpen}>Cancelar</button>
           <button className={`${Styles.Button} ${Styles.Button1}`} onClick={handlerDeleteData}>Eliminar</button>
         </div>        
       </div>

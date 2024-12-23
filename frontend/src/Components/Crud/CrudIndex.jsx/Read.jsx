@@ -1,5 +1,8 @@
 import Styles from "./Read.module.css"
+
 import Delete from "./Delete"
+import Update from "./Update"
+
 import { useEffect, useState } from "react"
 
 const Read = ({ columns, endPointRead, endPointDelete }) => {
@@ -21,7 +24,6 @@ const Read = ({ columns, endPointRead, endPointDelete }) => {
         ...rest
       }
     })
-    console.log(filteredData)    
     setData(filteredData)
   }
 
@@ -56,7 +58,9 @@ const Read = ({ columns, endPointRead, endPointDelete }) => {
               <td className={Styles.TableCell}>
                 <Delete endPointDelete={endPointDelete} id={row.id} data={data} setData={setData} />
               </td>
-              <td className={Styles.TableCell}>Actualizar</td>
+              <td className={Styles.TableCell}>
+                <Update id={row.id} data={data} setData={setData} />
+              </td>
             </tr>
           ))}
         </tbody>
