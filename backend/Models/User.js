@@ -2,7 +2,8 @@ const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
 
 class User extends Model{}
-User.init({
+User.init(
+  {
     idUser: {
       type: DataTypes.INTEGER,
       primaryKey: true,

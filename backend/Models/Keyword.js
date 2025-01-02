@@ -3,7 +3,8 @@ const sequelize = require('./Config/Connect')
 const Video = require('./Video')
 
 class KeyWord extends Model{}
-KeyWord.init({
+KeyWord.init(
+  {
     idKeyWord: {
       type: DataTypes.INTEGER,
       primaryKey: true,

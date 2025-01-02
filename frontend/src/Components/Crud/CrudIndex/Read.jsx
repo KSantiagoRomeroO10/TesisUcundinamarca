@@ -6,12 +6,10 @@ import Update from "./Update"
 import { useEffect, useState } from "react"
 
 const Read = ({ columns, endPointUpdate, endPointRead, endPointDelete }) => {
-
+  
   const [data, setData] = useState([])
-  const [videoUrl, setVideoUrl] = useState("")
-  const [activeVideoId, setActiveVideoId] = useState(null)
 
-  const ReadData = async () => {
+  const ReadData = async() => {
     const response = await fetch(`${endPointRead}`, {
       method: 'GET'
     })
@@ -32,21 +30,6 @@ const Read = ({ columns, endPointUpdate, endPointRead, endPointDelete }) => {
   useEffect(() => {
     ReadData()
   }, [])
-
-  const handleVideoShow = (data, id) => {
-    if (!data || data.length === 0) {
-      console.error('El video no está disponible');
-      return;
-    }
-
-    if (videoUrl) {
-      URL.revokeObjectURL(videoUrl);
-    }
-
-    const url = URL.createObjectURL(new Blob([Uint8Array.from(data)]));
-    setVideoUrl(url);
-    setActiveVideoId(id);
-  }
 
   return (
     <div className={Styles.TableContainer}>
@@ -69,19 +52,7 @@ const Read = ({ columns, endPointUpdate, endPointRead, endPointDelete }) => {
             >
               {columns.map((column, colIndex) => (
                 <td key={colIndex} className={Styles.TableCell}>
-                  {column.toLowerCase().includes("video") ? (
-                    activeVideoId === row.id ? (
-                      <video controls width="400" autoPlay>
-                        <source src={videoUrl} type="video/mp4" />
-                      </video>
-                    ) : (
-                      <button onClick={() => handleVideoShow(row[column], row.id)}>
-                        Ver Video
-                      </button>
-                    )
-                  ) : (
-                    row[column]
-                  )}
+                  {row[column]}
                 </td>
               ))}
               <td className={Styles.TableCell}>

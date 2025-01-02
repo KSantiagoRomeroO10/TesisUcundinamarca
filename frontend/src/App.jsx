@@ -35,7 +35,7 @@ function App() {
         <Route exact path="/Calificarnos" element={<RateUs />} />
         
         <Route element={<ProtectedRoute IsAllowed={ValidUser} />}>
-          <Route exact path="/CrudIndex" element={<CrudVideos />} />
+          <Route exact path="/CrudIndex" element={<CrudUsers />} />
         </Route>
       </Routes>
     </div>
