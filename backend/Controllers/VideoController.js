@@ -2,18 +2,16 @@ const Video = require('../Models/Video')
 
 const CreateVideo = async (req, res) => {
   try {
-    const { url } = req.body
-    if (!url) {
-      return res.status(400).json({ error: "No se recibió ninguna URL. Asegúrate de incluir 'url' en el cuerpo de la solicitud." })
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se proporcionó ningún video.' })
     }
+    
+    const newVideo = await Video.create({ videoBlob: req.file.buffer })
 
-    const newVideo = await Video.create({
-      url: url
-    })
-
-    res.status(201).json({ newVideo })
-  } catch (error) {
-    res.status(500).json({ "Error creando el video": error.message })
+    res.status(200).json({newVideo})
+  } 
+  catch (error) {
+    res.status(500).json({ 'Error Message': error.message, Error: error })
   }
 }
 

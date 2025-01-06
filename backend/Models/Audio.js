@@ -11,8 +11,8 @@ Audio.init(
     autoIncrement: true,
     allowNull: false
   },
-  url: {
-    type: DataTypes.STRING,
+  audioBlob: {
+    type: DataTypes.BLOB('long'),
     allowNull: false
   },
   idKeywordFK: {
@@ -24,7 +24,7 @@ Audio.init(
     }
   }
 },{
-  sequelize, modelName: 'audio' 
+  sequelize, modelName: 'Audio' 
 })
 
 module.exports = Audio

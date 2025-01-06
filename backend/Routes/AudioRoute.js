@@ -4,7 +4,6 @@ const AudioRoute = Router()
 
 const { CreateAudio, GetAudios, GetAudioById, UpdateAudio, DeleteAudio } = require('../Controllers/AudioController')
 
-// Configuración de multer para almacenamiento en memoria
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 

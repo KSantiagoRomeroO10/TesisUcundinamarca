@@ -1,21 +1,21 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
 
-class Video extends Model {}
-Video.init(
+class WordRecomended extends Model {}
+WordRecomended.init(
   {
-    idVideo: {
+    idWord: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
     },
-    videoBlob: {
-      type: DataTypes.BLOB('long'),
+    word: {
+      type: DataTypes.STRING,
       allowNull: false
     }
   },
-  { sequelize, modelName: 'Video' }
+  { sequelize, modelName: 'WordRecomended' }
 )
 
-module.exports = Video
+module.exports = WordRecomended

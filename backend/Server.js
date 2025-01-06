@@ -30,11 +30,17 @@ const StartDjango = require('./djangoapi/StartDjango')
 const Server = Express()
 
 Server.use(Express.json())
+Server.use(Express.urlencoded({ extended: true }))
 
 Server.use(Cors({
   origin: ['http://localhost:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
+
+// Server.use(Cors({
+//   origin: ['*'],
+//   methods: ['GET', 'POST', 'PUT', 'DELETE']
+// }))
 
 Server.use(Routes)
 

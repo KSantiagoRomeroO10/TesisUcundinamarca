@@ -4,6 +4,18 @@ import Styles from "./Video.module.css"
 const Video = ({ notes }) => {
   const [videoUrls, setVideoUrls] = useState([]) // URLs de los videos y palabras no encontradas
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0) // Índice del video actual
+  const [wordRecomended, setWordRecomended] = useState(true) // Palabra recomendada
+
+  const handleWordRecomended = async () => { 
+    const response = await fetch("http://localhost:3001/word/new", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: videoUrls[currentVideoIndex].word }),
+    })
+    const responseCreate = await response.json()
+    setWordRecomended(false)
+    console.log(responseCreate)
+  }
 
   // Procesa las palabras importantes a partir de notes
   const handleWordImportant = async () => {
@@ -48,6 +60,7 @@ const Video = ({ notes }) => {
 
   // Cambia al siguiente video o palabra al terminar el actual
   const handleNext = () => {
+    setWordRecomended(true)
     if (currentVideoIndex < videoUrls.length - 1) {
       setCurrentVideoIndex((prevIndex) => prevIndex + 1)
     } else {
@@ -86,7 +99,13 @@ const Video = ({ notes }) => {
                 La palabra <span className={Styles.Palabra}>{videoUrls[currentVideoIndex].word}</span> no tiene video.
               </h1>
               <br />
-              <button className={Styles.ButtonRecomendar}>Recomendar Palabra</button>
+              {
+                wordRecomended 
+                  ? 
+                  <button className={Styles.ButtonRecomendar} onClick={handleWordRecomended}>Recomendar Palabra</button> 
+                  : 
+                  <p>Palabra Recomendada</p>
+              }
               <button onClick={handleNext} className={Styles.ButtonRecomendar}>
                 Siguiente
               </button>

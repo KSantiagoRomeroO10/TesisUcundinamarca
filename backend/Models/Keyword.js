@@ -24,7 +24,7 @@ KeyWord.init(
       }
     }
   },
-  {sequelize, modelName: 'keyword'}
+  {sequelize, modelName: 'Keyword'}
 )
 
 module.exports = KeyWord
