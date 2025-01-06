@@ -2,9 +2,16 @@ import Styles from './Navbar.module.css'
 import HamburgerMenu from './HamburgerMenu/HamburgerMenu'
 import { NavLink } from 'react-router-dom'
 
-const Navbar = () => {
+const Navbar = ({ ValidUser }) => {
 
-  const routes = ['/Instrucciones', '/Entrar', '/Calificarnos']
+  let routes = []
+
+  if(ValidUser){
+    routes = ['/Instrucciones', '/Calificarnos', '/CrudIndex', '/Reportes', '/Salir']
+  }
+  else{
+    routes = ['/Instrucciones', '/Entrar', '/Calificarnos']
+  }
 
   return(
     <nav className={Styles.Navbar}>

@@ -17,6 +17,8 @@ import CrudEvaluation from './Components/Crud/CrudEvaluations/Evaluations'
 import CrudKeywords from './Components/Crud/CrudKeywords/Keywords'
 import CrudVideos from './Components/Crud/CrudVideos/Videos'
 
+import Exit from './Components/Exit/Exit'
+
 function App() {
 
   const LoggedInUser = () => {
@@ -28,7 +30,7 @@ function App() {
 
   return (
     <div className='Home'>
-      <Navbar/>
+      <Navbar ValidUser={ValidUser}/>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Entrar" element={<Login />} />
@@ -36,6 +38,8 @@ function App() {
         
         <Route element={<ProtectedRoute IsAllowed={ValidUser} />}>
           <Route exact path="/CrudIndex" element={<CrudUsers />} />
+          <Route exact path="/Reportes" element={<CrudUsers />} />
+          <Route exact path="/Salir" element={<Exit />} />
         </Route>
       </Routes>
     </div>
