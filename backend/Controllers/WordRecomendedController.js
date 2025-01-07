@@ -16,4 +16,32 @@ const CreateWordRecomended = async (req, res) => {
   }
 }
 
-module.exports = { CreateWordRecomended }
+const GetAllWordRecomended = async (req, res) => {
+  try {
+    const words = await WordRecomended.findAll() // Recupera todos los registros
+
+    // Agrupa y cuenta las palabras
+    const wordCount = words.reduce((acc, wordObj) => {
+      const word = wordObj.word
+      if (acc[word]) {
+        acc[word] += 1
+      } else {
+        acc[word] = 1
+      }
+      return acc
+    }, {})
+
+    // Formatea el resultado
+    const result = {
+      words: Object.keys(wordCount),
+      count: Object.values(wordCount),
+    }
+
+    res.status(200).json(result)
+  } 
+  catch (error) {
+    res.status(500).json({ 'Error Message': error.message, Error: error })
+  }
+}
+
+module.exports = { CreateWordRecomended, GetAllWordRecomended }

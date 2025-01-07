@@ -27,6 +27,53 @@ const GetEvaluations = async (req, res) => {
   }
 }
 
+const GetEvaluationsPromedio = async (req, res) => {
+  try {
+    // Obtiene todas las evaluaciones desde la base de datos
+    const evaluations = await Evaluation.findAll()
+
+    // Si no hay evaluaciones, responde con un mensaje adecuado
+    if (!evaluations || evaluations.length === 0) {
+      return res.status(404).json({ message: 'No hay evaluaciones disponibles' })
+    }
+
+    // Calcula los promedios de traduccion y software
+    let totalTraduccion = 0
+    let totalSoftware = 0
+    let count = 0
+
+    // Itera sobre las evaluaciones y suma los valores de traduccion y software
+    evaluations.forEach((item) => {
+      if (item.traduccion !== null && item.software !== null) {
+        totalTraduccion += item.traduccion
+        totalSoftware += item.software
+        count++
+      }
+    })
+
+    // Calcula los promedios si hay evaluaciones
+    const promedioTraduccion = totalTraduccion / count
+    const promedioSoftware = totalSoftware / count
+
+    // Construye el objeto con los promedios
+    const result = {
+      traduccion: promedioTraduccion,
+      software: promedioSoftware
+    }
+
+    // Devuelve los promedios en la respuesta
+    res.status(200).json({
+      traduccion: result.traduccion,
+      software: result.software      
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Error interno del servidor',
+      details: error.message,
+    })
+  }
+}
+
 const GetEvaluationById = async (req, res) => {
   try {
     const { id } = req.params
@@ -89,4 +136,4 @@ const DeleteEvaluation = async (req, res) => {
   }
 }
 
-module.exports = { CreateEvaluation, GetEvaluations, GetEvaluationById, UpdateEvaluation, DeleteEvaluation }
+module.exports = { CreateEvaluation, GetEvaluations, GetEvaluationsPromedio, GetEvaluationById, UpdateEvaluation, DeleteEvaluation }

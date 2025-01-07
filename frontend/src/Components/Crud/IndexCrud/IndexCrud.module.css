@@ -1,0 +1,21 @@
+.Container{
+  background: #eee9e9;
+  width: 50vw;
+  border-radius: 5px;
+  margin: auto;
+  padding: 10px;
+}
+
+.Button p{
+  background: #40cbee;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  width: 60%;
+  margin: auto;
+  border: solid #eee9e9 15px;
+}
+.Button{
+  text-decoration: none;
+}

@@ -12,10 +12,13 @@ import ProtectedRoute from './Components/ProtectedRoutes/ProtectedRoutes'
 
 import UseUserStore from "./Stores/UseUserStore"
 
+import CrudIndex from './Components/Crud/IndexCrud/IndexCrud'
+
 import CrudUsers from './Components/Crud/CrudUsers/Users'
 import CrudEvaluation from './Components/Crud/CrudEvaluations/Evaluations'
 import CrudKeywords from './Components/Crud/CrudKeywords/Keywords'
-import CrudVideos from './Components/Crud/CrudVideos/Videos'
+
+import ChartPdf from './Components/ChartPdf/ChartPdf'
 
 import Exit from './Components/Exit/Exit'
 
@@ -37,8 +40,12 @@ function App() {
         <Route exact path="/Calificarnos" element={<RateUs />} />
         
         <Route element={<ProtectedRoute IsAllowed={ValidUser} />}>
-          <Route exact path="/CrudIndex" element={<CrudUsers />} />
-          <Route exact path="/Reportes" element={<CrudUsers />} />
+          <Route exact path="/CrudIndex" element={<CrudIndex />} />
+          <Route exact path="/CrudUsers" element={<CrudUsers />} />
+          <Route exact path="/CrudEvaluation" element={<CrudEvaluation />} />
+          <Route exact path="/CrudKeywords" element={<CrudKeywords />} />
+
+          <Route exact path="/Reportes" element={<ChartPdf />} />
           <Route exact path="/Salir" element={<Exit />} />
         </Route>
       </Routes>
