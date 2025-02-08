@@ -1,22 +1,5 @@
 const Audio = require('../Models/Audio')
 
-const CreateAudio = async (req, res) => {
-  try {
-    const audioData = req.file.buffer
-    const { idKeywordFK } = req.body
-    
-    const newAudio = await Audio.create({
-      audio: audioData,
-      idKeywordFK: idKeywordFK
-    })
-
-    res.status(200).json({newAudio})
-  } 
-  catch (error) {
-    res.status(500).json({Error: error})
-  }
-}
-
 const GetAudios = async (req, res) => {
   try {
     const audios = await Audio.findAll()
@@ -72,4 +55,4 @@ const DeleteAudio = async (req, res) => {
   }
 }
 
-module.exports = { CreateAudio, GetAudios, GetAudioById, UpdateAudio, DeleteAudio }
+module.exports = { GetAudios, GetAudioById, UpdateAudio, DeleteAudio }

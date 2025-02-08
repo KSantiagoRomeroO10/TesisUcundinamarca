@@ -1,20 +1,5 @@
 const Video = require('../Models/Video')
 
-const CreateVideo = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No se proporcionó ningún video.' })
-    }
-    
-    const newVideo = await Video.create({ videoBlob: req.file.buffer })
-
-    res.status(200).json({newVideo})
-  } 
-  catch (error) {
-    res.status(500).json({ 'Error Message': error.message, Error: error })
-  }
-}
-
 const GetVideos = async (req, res) => {
   try {
     const videos = await Video.findAll()
@@ -74,4 +59,4 @@ const DeleteVideo = async (req, res) => {
   }
 }
 
-module.exports = { CreateVideo, GetVideos, GetVideoById, UpdateVideo, DeleteVideo }
+module.exports = { GetVideos, GetVideoById, UpdateVideo, DeleteVideo }
