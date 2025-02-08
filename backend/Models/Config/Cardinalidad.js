@@ -6,21 +6,6 @@ const Keyword = require('../Keyword')
 const User = require('../User')
 const Video = require('../Video')
 
-Keyword.hasMany(Audio,{
-  foreignKey: {
-    name: 'idKeywordFK',
-    allowNull: false
-  }
-})
-
-Audio.belongsTo(Keyword,{
-  foreignKey: {
-    name: 'idKeywordFK',
-    allowNull: false
-  },
-  onDelete: 'CASCADE'
-})
-
 Video.hasOne(Keyword, {
   foreignKey: {
     name: 'IdVideoFK',

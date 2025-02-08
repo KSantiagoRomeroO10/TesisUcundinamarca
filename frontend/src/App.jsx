@@ -17,6 +17,8 @@ import CrudIndex from './Components/Crud/IndexCrud/IndexCrud'
 import CrudUsers from './Components/Crud/CrudUsers/Users'
 import CrudEvaluation from './Components/Crud/CrudEvaluations/Evaluations'
 import CrudKeywords from './Components/Crud/CrudKeywords/Keywords'
+import CrudVideos from './Components/Crud/CrudVideos/Videos'
+import CrudAudios from './Components/Crud/CrudAudios/Audios'
 
 import ChartPdf from './Components/ChartPdf/ChartPdf'
 
@@ -41,9 +43,12 @@ function App() {
         
         <Route element={<ProtectedRoute IsAllowed={ValidUser} />}>
           <Route exact path="/CrudIndex" element={<CrudIndex />} />
+
           <Route exact path="/CrudUsers" element={<CrudUsers />} />
           <Route exact path="/CrudEvaluation" element={<CrudEvaluation />} />
           <Route exact path="/CrudKeywords" element={<CrudKeywords />} />
+          <Route exact path="/CrudVideos" element={<CrudVideos />} />
+          <Route exact path="/CrudAudios" element={<CrudAudios />} />
 
           <Route exact path="/Reportes" element={<ChartPdf />} />
           <Route exact path="/Salir" element={<Exit />} />

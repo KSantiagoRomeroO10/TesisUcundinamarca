@@ -15,6 +15,12 @@ const IndexCrud = () => {
       <NavLink to='/CrudKeywords' className={Styles.Button}>
         <p>Crud Palabras Clave</p>
       </NavLink>
+      <NavLink to='/CrudVideos' className={Styles.Button}>
+        <p>Crud Videos</p>
+      </NavLink>
+      <NavLink to='/CrudAudios' className={Styles.Button}>
+        <p>Crud Audios</p>
+      </NavLink>
     </div>
   )
 }

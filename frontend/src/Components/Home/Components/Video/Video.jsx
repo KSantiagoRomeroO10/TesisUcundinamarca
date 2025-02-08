@@ -36,7 +36,8 @@ const Video = ({ notes }) => {
       body: JSON.stringify({ keyWord }),
     })
     const responseCreate = await response.json()
-    return responseCreate?.IdVideoFK ? responseCreate.video.video.data : null
+
+    return responseCreate?.IdVideoFK ? responseCreate.Video.videoBlob.data : null
   }
 
   // Procesa los videos obtenidos a partir de palabras importantes

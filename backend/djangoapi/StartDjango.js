@@ -6,14 +6,14 @@ const startDjangoAPI = () => {
     // Ejecuta el comando para iniciar el servidor Django
     const djangoProcess = spawn('python', ['djangoapi/manage.py', 'runserver', '8000'])
 
-    // // Muestra la salida del proceso de Django en la consola
-    // djangoProcess.stdout.on('data', (data) => {
-    //   console.log(`stdout: ${data}`)
-    // })
+    // Muestra la salida del proceso de Django en la consola
+    djangoProcess.stdout.on('data', (data) => {
+      console.log(`stdout: ${data}`)
+    })
 
-    // djangoProcess.stderr.on('data', (data) => {
-    //   console.error(`stderr: ${data}`)
-    // })
+    djangoProcess.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`)
+    })
 
     djangoProcess.on('close', (code) => {
       if (code !== 0) {

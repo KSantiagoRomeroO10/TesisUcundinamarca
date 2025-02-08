@@ -9,3 +9,7 @@ python -m spacy download es_core_news_lg
 sudo apt install python3-venv
 python3 -m venv TesisUCundinamarca
 source TesisUCundinamarca/bin/activate
+
+migraciones:
+
+python manage.py makemigrations && python manage.py migrate
