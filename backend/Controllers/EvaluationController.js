@@ -4,7 +4,7 @@ const CreateEvaluation = async (req, res) => {
   try {
     const { traduccion, software } = req.body
     const newEvaluation = await Evaluation.create({ traduccion, software })
-    res.status(201).json({newEvaluation}, {'Entrega': true})
+    res.status(201).json({ newEvaluation, 'Entrega': true })
   }
   catch (error) {
     return res.status(500).json({
@@ -18,7 +18,7 @@ const CreateEvaluation = async (req, res) => {
 const GetEvaluations = async (req, res) => {
   try {
     const evaluations = await Evaluation.findAll()
-    res.status(200).json(evaluations, {'Entrega': true})
+    res.status(200).json({ evaluations, 'Entrega': true })
   }
   catch (error) {
     return res.status(500).json({
@@ -36,7 +36,7 @@ const GetEvaluationsPromedio = async (req, res) => {
 
     // Si no hay evaluaciones, responde con un mensaje adecuado
     if (!evaluations || evaluations.length === 0) {
-      return res.status(404).json({ message: 'No hay evaluaciones disponibles' }, {'Entrega': false})
+      return res.status(404).json({ message: 'No hay evaluaciones disponibles', 'Entrega': false })
     }
 
     // Calcula los promedios de traduccion y software
@@ -60,15 +60,12 @@ const GetEvaluationsPromedio = async (req, res) => {
     // Construye el objeto con los promedios
     const result = {
       traduccion: promedioTraduccion,
-      software: promedioSoftware
+      software: promedioSoftware,
+      'Entrega': true
     }
 
     // Devuelve los promedios en la respuesta
-    res.status(200).json({
-      traduccion: result.traduccion,
-      software: result.software, 
-      'Entrega': true
-    })
+    res.status(200).json(result)
   } catch (error) {
     return res.status(500).json({
       error: 'Error interno del servidor',
@@ -83,10 +80,10 @@ const GetEvaluationById = async (req, res) => {
     const { id } = req.params
     const evaluation = await Evaluation.findByPk(id)
     if (evaluation) {
-      res.status(200).json(evaluation, {'Entrega': true})
+      res.status(200).json({ evaluation, 'Entrega': true })
     }
     else {
-      res.status(404).json({ error: 'Evaluación no encontrada' }, {'Entrega': false})
+      res.status(404).json({ error: 'Evaluación no encontrada', 'Entrega': false })
     }
   }
   catch (error) {
@@ -107,16 +104,17 @@ const UpdateEvaluation = async (req, res) => {
       existingEvaluation.traduccion = traduccion
       existingEvaluation.software = software
       await existingEvaluation.save()
-      res.status(200).json(existingEvaluation, {'Entrega': true})
+      res.status(200).json({ existingEvaluation, 'Entrega': true })
     }
     else {
-      res.status(404).json({ error: 'Evaluación no encontrada' }, {'Entrega': false})
+      res.status(404).json({ error: 'Evaluación no encontrada', 'Entrega': false })
     }
   }
   catch (error) {
     return res.status(500).json({
       error: 'Error interno del servidor',
       details: error.message,
+      'Entrega': false
     })
   }
 }
@@ -127,10 +125,10 @@ const DeleteEvaluation = async (req, res) => {
     const evaluation = await Evaluation.findByPk(id)
     if (evaluation) {
       await evaluation.destroy()
-      res.status(200).json({ message: 'Evaluación eliminada' }, {'Entrega': true})
+      res.status(200).json({ message: 'Evaluación eliminada', 'Entrega': true })
     }
     else {
-      res.status(404).json({ error: 'Evaluación no encontrada' }, {'Entrega': false})
+      res.status(404).json({ error: 'Evaluación no encontrada', 'Entrega': false })
     }
   }
   catch (error) {
