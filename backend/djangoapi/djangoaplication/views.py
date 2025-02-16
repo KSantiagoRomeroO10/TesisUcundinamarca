@@ -54,7 +54,7 @@ def subir_video(request):
 
       return JsonResponse({'mensaje': 'Video subido correctamente.', 'idVideo': video.idVideo, 'Entrega': True}, status=201)
     except Exception as e:
-      return JsonResponse({'error': str(e)}, status=500)
+      return JsonResponse({'error': str(e), 'Entrega': False}, status=500)
   else:
     return JsonResponse({'error': 'Método no permitido. Use POST.', 'Entrega': False}, status=405)
 
@@ -74,6 +74,6 @@ def subir_audio(request):
 
       return JsonResponse({'mensaje': 'Audio subido correctamente.', 'idAudio': audio.idAudio, 'Entrega': True}, status=201)
     except Exception as e:
-      return JsonResponse({'error': str(e)}, status=500)
+      return JsonResponse({'error': str(e), 'Entrega': False}, status=500)
   else:
     return JsonResponse({'error': 'Método no permitido. Use POST.', 'Entrega': False}, status=405)
