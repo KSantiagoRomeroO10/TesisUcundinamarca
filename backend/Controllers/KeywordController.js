@@ -5,20 +5,22 @@ const CreateKeyWord = async (req, res) => {
   try {
     const { keyWord, IdVideoFK } = req.body
     const newKeyWord = await KeyWord.create({ keyWord, IdVideoFK })
-    res.status(201).json({newKeyWord})
+    const keyWordFinal = newKeyWord.toJSON()
+    keyWordFinal.Entrega = true
+    return res.status(201).json(keyWordFinal)
   }
   catch (error) {
-    res.status(500).json({ error: error })
+    res.status(500).json({ error: error.message, Entrega: false })
   }
 }
 
 const GetKeyWords = async (req, res) => {
   try {
-    const keyWords = await KeyWord.findAll()
-    res.status(200).json(keyWords)
+    const keyWords = await KeyWord.findAll({ raw: true })
+    res.status(200).json([...keyWords, { Entrega: true }])
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message, Entrega: false })
   }
 }
 
@@ -27,14 +29,16 @@ const GetKeyWordById = async (req, res) => {
     const { id } = req.params
     const keyWord = await KeyWord.findByPk(id)
     if (keyWord) {
-      res.status(200).json(keyWord)
+      const keyWordFinal = keyWord.toJSON()
+      keyWordFinal.Entrega = true
+      res.status(200).json(keyWordFinal)
     }
     else {
-      res.status(404).json({ error: 'Keyword no encontrada' })
+      res.status(404).json({ error: 'Keyword no encontrada', Entrega: false })
     }
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message, Entrega: false })
   }
 }
 
@@ -47,15 +51,16 @@ const GetKeyWordByWord = async (req, res) => {
     })
 
     if (keyWordDB) {
-      res.status(200).json(keyWordDB)
+      const keyWordFinal = keyWordDB.toJSON()
+      keyWordFinal.Entrega = true
+      res.status(200).json(keyWordFinal)
     } else {
-      res.status(404).json({ error: 'KeyWord no encontrada' })
+      res.status(404).json({ error: 'KeyWord no encontrada', Entrega: false })
     }
   } 
   catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message, Entrega: false })
   }
-
 }
 
 const UpdateKeyWord = async (req, res) => {
@@ -68,14 +73,16 @@ const UpdateKeyWord = async (req, res) => {
       existingKeyWord.IdAudioFK = IdAudioFK
       existingKeyWord.IdVideoFK = IdVideoFK
       await existingKeyWord.save()
-      res.status(200).json(existingKeyWord)
+      const keyWordFinal = existingKeyWord.toJSON()
+      keyWordFinal.Entrega = true
+      res.status(200).json(keyWordFinal)
     }
     else {
-      res.status(404).json({ error: 'Keyword no encontrada' })
+      res.status(404).json({ error: 'Keyword no encontrada', Entrega: false })
     }
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message, Entrega: false })
   }
 }
 
@@ -85,14 +92,14 @@ const DeleteKeyWord = async (req, res) => {
     const keyWord = await KeyWord.findByPk(id)
     if (keyWord) {
       await keyWord.destroy()
-      res.status(200).json({ message: 'Keyword eliminada' })
+      res.status(200).json({ message: 'Keyword eliminada', Entrega: true })
     }
     else {
-      res.status(404).json({ error: 'Keyword no encontrada' })
+      res.status(404).json({ error: 'Keyword no encontrada', Entrega: false })
     }
   }
   catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message, Entrega: false })
   }
 }
 

@@ -4,15 +4,17 @@ const CreateWordRecomended = async (req, res) => {
   try {
     const { word } = req.body
     if (!word) {
-      return res.status(400).json({ error: 'No se proporcionó ninguna palabra.' })
+      return res.status(400).json({ error: 'No se proporcionó ninguna palabra.', Entrega: false })
     }
 
     const newWordRecomended = await WordRecomended.create({ word })
+    const wordFinal = newWordRecomended.toJSON()
+    wordFinal.Entrega = true
 
-    res.status(200).json({newWordRecomended})
+    res.status(200).json(wordFinal)
   } 
   catch (error) {
-    res.status(500).json({ 'Error Message': error.message, Error: error })
+    res.status(500).json({ 'Error Message': error.message, Error: error, Entrega: false })
   }
 }
 
@@ -35,12 +37,13 @@ const GetAllWordRecomended = async (req, res) => {
     const result = {
       words: Object.keys(wordCount),
       count: Object.values(wordCount),
+      Entrega: true // Indica que la operación fue exitosa
     }
 
     res.status(200).json(result)
   } 
   catch (error) {
-    res.status(500).json({ 'Error Message': error.message, Error: error })
+    res.status(500).json({ 'Error Message': error.message, Error: error, Entrega: false })
   }
 }
 
