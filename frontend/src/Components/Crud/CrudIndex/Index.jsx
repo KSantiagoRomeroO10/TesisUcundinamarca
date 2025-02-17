@@ -7,7 +7,7 @@ const Index = ({ columns, endPoints }) => {
   const [data, setData] = useState([])
   
   const { endPointDelete, endPointRead, endPointUpdate, endPointNew } = endPoints
-
+  
   return (
     <div>
       <Create data={data} setData={setData} columns={columns} endPointNew={endPointNew}/>

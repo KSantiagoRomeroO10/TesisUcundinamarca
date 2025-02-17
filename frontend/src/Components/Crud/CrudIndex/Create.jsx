@@ -2,6 +2,8 @@ import Styles from "./Create.module.css"
 import { useState } from "react"
 
 const Create = ({ columns, endPointNew, setData, data }) => {
+  console.log(data)
+  
   const [formData, setFormData] = useState({})
   const [open, setOpen] = useState(false)
 
@@ -35,28 +37,48 @@ const Create = ({ columns, endPointNew, setData, data }) => {
 
       const newDate = await response.json()
 
-      // Acceder al objeto anidado sin conocer la clave dinámica
-      const getNestedObject = (response) => {
-        for (const key in response) {
-          if (typeof response[key] === "object" && !Array.isArray(response[key])) {
-            console.log("Clave dinámica encontrada:", key)
-            console.log("Objeto anidado:", response[key])
-            return response[key]
-          }
-        }
-        return null
-      }
-            
-      console.log("Elemento creado con éxito: ", getNestedObject(newDate))
+      // // Acceder al objeto anidado sin conocer la clave dinámica
+      // const getNestedObject = (response) => {
+      //   for (const key in response) {
+      //     if (typeof response[key] === "object" && !Array.isArray(response[key])) {
+      //       console.log("Clave dinámica encontrada:", key)
+      //       console.log("Objeto anidado:", response[key])
+      //       return response[key]
+      //     }
+      //   }
+      //   return null
+      // }
 
-      setData([...data, getNestedObject(newDate)])
+      function getNextId(arr) {
+        if (!Array.isArray(arr) || arr.length === 0) return 1 // Si el array está vacío, empieza desde 1
+    
+        let maxId = 0
+    
+        arr.forEach(obj => {
+          Object.keys(obj).forEach(key => {           
+            console.log(key)
+            
+            if (key.toLowerCase().includes("id") && typeof obj[key] === "number") {
+              maxId = Math.max(maxId, obj[key])
+            }
+          })
+        })
+    
+        return maxId + 1
+      }
+
+      // const result = getNestedObject(newDate)
+
+      newDate.id = getNextId(data)
+
+      setData([...data, newDate])
 
       handleOpen()
     } catch (error) {
       console.error("Error al crear el elemento:", error)
     }
   }
-
+  //&& key === 'IdVideoFK' 
   return (
     <div>
       <button className={`${Styles.Create} ${Styles.Button1}`} onClick={handleOpen}>
@@ -68,7 +90,7 @@ const Create = ({ columns, endPointNew, setData, data }) => {
             <h1>Crear Nuevo</h1>
             <form className={Styles.Formulario} onSubmit={handleSubmit}>
               {columns
-                .filter((col) => !/id/i.test(col)) // Ignorar columnas que contengan "id"
+                .filter((col) => !/id/i.test(col) || col === "IdVideoFK") // Ignorar columnas que contengan "id"
                 .map((col, index) => (
                   <div key={index}>
                     <label htmlFor={col}>{col}</label>

@@ -4,7 +4,9 @@ const CreateEvaluation = async (req, res) => {
   try {
     const { traduccion, software } = req.body
     const newEvaluation = await Evaluation.create({ traduccion, software })
-    res.status(201).json({ newEvaluation, 'Entrega': true })
+    const evaluationFinal = newEvaluation.toJSON()
+    evaluationFinal.Entrega = true
+    res.status(201).json(evaluationFinal)
   }
   catch (error) {
     return res.status(500).json({
