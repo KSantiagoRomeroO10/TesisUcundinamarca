@@ -6,6 +6,7 @@ class Video(models.Model):
   
   idVideo = models.AutoField(primary_key=True)
   videoBlob = models.BinaryField()
+  fileHash = models.CharField(max_length=64, unique=True)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 
@@ -20,6 +21,7 @@ class Audio(models.Model):
   
   idAudio = models.AutoField(primary_key=True)
   audioBlob = models.BinaryField()
+  fileHash = models.CharField(max_length=64, unique=True)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 

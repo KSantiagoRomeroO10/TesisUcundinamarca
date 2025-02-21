@@ -13,6 +13,10 @@ Video.init(
     videoBlob: {
       type: DataTypes.BLOB('long'),
       allowNull: false
+    },
+    fileHash: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   },
   { sequelize, modelName: 'Video' }

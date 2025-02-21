@@ -3,13 +3,21 @@ const User = require('../Models/User')
 const CreateUser = async (req, res) => {
   try {
     const { name, email, password } = req.body
+
+    // Verificar si el correo ya está registrado
+    const existingUser = await User.findOne({ where: { email } })
+    if (existingUser) {
+      return res.status(400).json({ error: 'El correo electrónico ya está en uso', Entrega: false })
+    }
+
+    // Si el correo no está registrado, crear el nuevo usuario
     const newUser = await User.create({ name, email, password })
     const userFinal = newUser.toJSON()
     userFinal.Entrega = true
+
     res.status(201).json(userFinal)
-  } 
-  catch (error) {
-    res.status(500).json({ error: error.message, 'Entrega': false })
+  } catch (error) {
+    res.status(500).json({ error: error.message, Entrega: false })
   }
 }
 

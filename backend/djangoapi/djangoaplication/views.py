@@ -6,6 +6,7 @@ from django.http import JsonResponse  # Importa JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import spacy
+import hashlib
 
 nlp = spacy.load('es_core_news_lg')
 
@@ -37,6 +38,9 @@ def extraer_palabras_importantes(request):
   else:
     return JsonResponse({'error': 'Método no permitido. Use POST.', 'Entrega': False}, status=405)
 
+# Lista de tipos MIME permitidos para video y audio
+ALLOWED_VIDEO_MIME_TYPES = ['video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/x-matroska']
+ALLOWED_AUDIO_MIME_TYPES = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/x-wav']
 
 @csrf_exempt
 def subir_video(request):
@@ -47,9 +51,22 @@ def subir_video(request):
       if not video_file:
         return JsonResponse({'error': 'No se proporcionó un archivo de video.', 'Entrega': False}, status=400)
 
-      # Leer el contenido del archivo y guardarlo en la base de datos
+      # Validar que el archivo sea un video
+      if video_file.content_type not in ALLOWED_VIDEO_MIME_TYPES:
+        return JsonResponse({'error': 'El archivo no es un video válido.', 'Entrega': False}, status=400)
+
+      # Leer el contenido del archivo
       video_blob = video_file.read()
-      video = Video(videoBlob=video_blob)
+
+      # Calcular el hash del contenido del archivo
+      file_hash = hashlib.sha256(video_blob).hexdigest()
+
+      # Verificar si ya existe un video con el mismo hash
+      if Video.objects.filter(fileHash=file_hash).exists():
+        return JsonResponse({'error': 'El video ya existe en la base de datos.', 'Entrega': False}, status=400)
+
+      # Guardar el video en la base de datos
+      video = Video(videoBlob=video_blob, fileHash=file_hash)
       video.save()
 
       return JsonResponse({'mensaje': 'Video subido correctamente.', 'idVideo': video.idVideo, 'Entrega': True}, status=201)
@@ -67,9 +84,22 @@ def subir_audio(request):
       if not audio_file:
         return JsonResponse({'error': 'No se proporcionó un archivo de audio.', 'Entrega': False}, status=400)
 
-      # Leer el contenido del archivo y guardarlo en la base de datos
+      # Validar que el archivo sea un audio
+      if audio_file.content_type not in ALLOWED_AUDIO_MIME_TYPES:
+        return JsonResponse({'error': 'El archivo no es un audio válido.', 'Entrega': False}, status=400)
+
+      # Leer el contenido del archivo
       audio_blob = audio_file.read()
-      audio = Audio(audioBlob=audio_blob)
+
+      # Calcular el hash del contenido del archivo
+      file_hash = hashlib.sha256(audio_blob).hexdigest()
+
+      # Verificar si ya existe un audio con el mismo hash
+      if Audio.objects.filter(fileHash=file_hash).exists():
+        return JsonResponse({'error': 'El audio ya existe en la base de datos.', 'Entrega': False}, status=400)
+
+      # Guardar el audio en la base de datos
+      audio = Audio(audioBlob=audio_blob, fileHash=file_hash)
       audio.save()
 
       return JsonResponse({'mensaje': 'Audio subido correctamente.', 'idAudio': audio.idAudio, 'Entrega': True}, status=201)
