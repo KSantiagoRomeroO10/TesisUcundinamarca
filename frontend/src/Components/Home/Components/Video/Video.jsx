@@ -51,7 +51,7 @@ const Video = ({ notes }) => {
         const videoUrl = URL.createObjectURL(new Blob([Uint8Array.from(videoData)], { type: "video/mp4" }))
         videosAndWords.push({ type: "video", url: videoUrl })
       } else {
-        videosAndWords.push({ type: "word", word }) // Guarda la palabra como "no encontrada"
+        videosAndWords.push({ type: "word", word })
       }
     }
 
@@ -60,14 +60,24 @@ const Video = ({ notes }) => {
   }
 
   // Cambia al siguiente video o palabra al terminar el actual
-  const handleNext = () => {
+  const handleNext = (back) => {
     setWordRecomended(true)
-    if (currentVideoIndex < videoUrls.length - 1) {
-      setCurrentVideoIndex((prevIndex) => prevIndex + 1)
-    } else {
-      console.log("Todos los elementos han sido mostrados.")
-      setVideoUrls([]) // Limpia la lista de videos y palabras
-      setCurrentVideoIndex(0) // Reinicia el índice
+
+    if(back){
+      if (currentVideoIndex < videoUrls.length - 1) {
+        setCurrentVideoIndex((prevIndex) => prevIndex + 1)
+      } else {
+        console.log("Todos los elementos han sido mostrados.")
+        setVideoUrls([]) // Limpia la lista de videos y palabras
+        setCurrentVideoIndex(0) // Reinicia el índice
+      }
+    }
+    else{
+      if (currentVideoIndex > 0) { // Verifica que el índice no sea menor que 0
+        setCurrentVideoIndex((prevIndex) => prevIndex - 1) // Retrocede el índice
+      } else {
+        console.log("Ya estás en el primer elemento.")
+      }  
     }
   }
 
@@ -87,13 +97,21 @@ const Video = ({ notes }) => {
       {videoUrls.length > 0 ? (
         <>
           {videoUrls[currentVideoIndex].type === "video" ? (
-            <video
-              controls
-              width="400"
-              autoPlay
-              src={videoUrls[currentVideoIndex].url}
-              onEnded={handleNext}
-            />
+            <div>
+              <video
+                controls
+                width="400"
+                autoPlay
+                src={videoUrls[currentVideoIndex].url}
+                // onEnded={handleNext}
+              />
+              <button onClick={() => handleNext(false)} className={Styles.ButtonRecomendar}>
+                Atras
+              </button>
+              <button onClick={() => handleNext(true)} className={Styles.ButtonRecomendar}>
+                Siguiente
+              </button>
+            </div>
           ) : (
             <div>
               <h1>
@@ -107,7 +125,7 @@ const Video = ({ notes }) => {
                   : 
                   <p>Palabra Recomendada</p>
               }
-              <button onClick={handleNext} className={Styles.ButtonRecomendar}>
+              <button onClick={() => handleNext(true)} className={Styles.ButtonRecomendar}>
                 Siguiente
               </button>
             </div>
