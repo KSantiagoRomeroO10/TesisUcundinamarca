@@ -66,7 +66,6 @@ def subir_video(request):
   else:
     return JsonResponse({'error': 'Método no permitido. Use POST.', 'Entrega': False}, status=405)
 
-
 @csrf_exempt
 def subir_audio(request):
   if request.method == 'POST':
@@ -124,7 +123,6 @@ def actualizar_video(request, idVideo):
       return JsonResponse({'error': str(e), 'Entrega': False}, status=500)
   else:
     return JsonResponse({'error': 'Método no permitido. Use POST.', 'Entrega': False}, status=405)
-
 
 @csrf_exempt
 def actualizar_audio(request, idAudio):
