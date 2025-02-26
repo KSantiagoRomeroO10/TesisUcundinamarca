@@ -24,14 +24,29 @@ const Update = ({ endPointUpdate, columns, id, data, setData }) => {
     setIsLoading(true)
 
     try {
-      const response = await fetch(`${endPointUpdate}/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
+      let response
+      if (endPointUpdate.toLowerCase().includes('djangoaplication')) {
+        const formDataToSend = new FormData()
 
-      if (!response.ok) {
-        throw new Error('Error al actualizar el elemento.')
+        // Recorremos las columnas y añadimos los datos al FormData
+        columns.forEach((column) => {
+          if (column.toLowerCase() === 'video' && formData[column] instanceof File) {
+            formDataToSend.append('video_file', formData[column]) // Usamos 'video_file' para videos
+          } else if (column.toLowerCase() === 'audio' && formData[column] instanceof File) {
+            formDataToSend.append('audio_file', formData[column]) // Usamos 'audio_file' para audios
+          }
+        })
+
+        response = await fetch(`${endPointUpdate}/${id}/`, {
+          method: 'POST',
+          body: formDataToSend,
+        })
+      } else {
+        response = await fetch(`${endPointUpdate}/${id}/`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        })
       }
 
       const updatedData = data.map((item) =>
@@ -51,6 +66,10 @@ const Update = ({ endPointUpdate, columns, id, data, setData }) => {
   const handleOpen = useCallback(() => setOpen((prev) => !prev), [])
   const handleChange = useCallback((key, value) => {
     setFormData((prevState) => ({ ...prevState, [key]: value }))
+  }, [])
+
+  const handleFileChange = useCallback((key, file) => {
+    setFormData((prevState) => ({ ...prevState, [key]: file }))
   }, [])
 
   useEffect(() => {
@@ -79,14 +98,23 @@ const Update = ({ endPointUpdate, columns, id, data, setData }) => {
                     <label htmlFor={column}>
                       {column.charAt(0).toUpperCase() + column.slice(1)}
                     </label>
-                    <input
-                      id={column}
-                      type="text"
-                      value={formData[column] || ''}
-                      onChange={(e) => handleChange(column, e.target.value)}
-                      placeholder={column}
-                      disabled={isLoading}
-                    />
+                    {column.toLowerCase() === 'video' || column.toLowerCase() === 'audio' ? (
+                      <input
+                        id={column}
+                        type="file"
+                        onChange={(e) => handleFileChange(column, e.target.files[0])}
+                        disabled={isLoading}
+                      />
+                    ) : (
+                      <input
+                        id={column}
+                        type="text"
+                        value={formData[column] || ''}
+                        onChange={(e) => handleChange(column, e.target.value)}
+                        placeholder={column}
+                        disabled={isLoading}
+                      />
+                    )}
                   </div>
                 ))}
               <button

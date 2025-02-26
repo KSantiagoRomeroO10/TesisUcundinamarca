@@ -125,6 +125,9 @@ const Video = ({ notes }) => {
                   : 
                   <p>Palabra Recomendada</p>
               }
+              <button onClick={() => handleNext(false)} className={Styles.ButtonRecomendar}>
+                Atras
+              </button>
               <button onClick={() => handleNext(true)} className={Styles.ButtonRecomendar}>
                 Siguiente
               </button>

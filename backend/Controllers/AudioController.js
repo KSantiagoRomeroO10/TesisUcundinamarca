@@ -25,25 +25,6 @@ const GetAudioById = async (req, res) => {
   }
 }
 
-const UpdateAudio = async (req, res) => {
-  try {
-    const { id } = req.params
-    const { audio } = req.body
-    const existingAudio = await Audio.findByPk(id)
-    if (existingAudio) {
-      existingAudio.audio = audio
-      await existingAudio.save()
-      const updatedAudio = existingAudio.toJSON()
-      updatedAudio.Entrega = true
-      res.status(200).json(updatedAudio)
-    } else {
-      res.status(404).json({ error: 'Audio no encontrado', 'Entrega': false })
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message, 'Entrega': false })
-  }
-}
-
 const DeleteAudio = async (req, res) => {
   try {
     const { id } = req.params
@@ -59,4 +40,4 @@ const DeleteAudio = async (req, res) => {
   }
 }
 
-module.exports = { GetAudios, GetAudioById, UpdateAudio, DeleteAudio }
+module.exports = { GetAudios, GetAudioById, DeleteAudio }

@@ -8,8 +8,8 @@ const Audios = () => {
   const endPoints = {
     endPointRead: 'http://localhost:3001/audio/get',
     endPointDelete: 'http://localhost:3001/audio/delete',
-    endPointUpdate: 'http://localhost:3001/audio/update',
-    endPointNew: 'http://localhost:3001/audio/new'
+    endPointUpdate: 'http://127.0.0.1:8000/djangoaplication/audio/actualizar',
+    endPointNew: 'http://127.0.0.1:8000/djangoaplication/subir_audio/'
   }
   
   return (
