@@ -36,7 +36,7 @@ const Create = ({ columns, endPointNew, setData, data }) => {
   
     // Validación de campos vacíos
     const hasEmptyFields = columns
-      .filter((col) => !/id/i.test(col) || col === "IdVideoFK")
+      .filter((col) => !/id/i.test(col) || col === "IdVideoFK" || col === "video")
       .some((col) => !formData[col])
     if (hasEmptyFields) {
       setErrorEmpty(true)
@@ -131,7 +131,7 @@ const Create = ({ columns, endPointNew, setData, data }) => {
             <h1>Crear Nuevo</h1>
             <form className={Styles.Formulario} onSubmit={handleSubmit}>
               {columns
-                .filter((col) => !/id/i.test(col) || col === "IdVideoFK")
+                .filter((col) => !/id/i.test(col) || col === "IdVideoFK" || col === "video")
                 .map((col, index) => (
                   <div key={index}>
                     <label htmlFor={col}>

@@ -2,11 +2,7 @@ const Video = require('../Models/Video')
 
 const GetVideos = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query
-    const offset = (page - 1) * limit
     const videos = await Video.findAll({ 
-      limit: parseInt(limit),
-      offset: parseInt(offset),
       raw: true 
     })
     res.status(200).json([ ...videos, {'Entrega': true} ])

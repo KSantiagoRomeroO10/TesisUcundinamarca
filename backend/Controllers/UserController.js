@@ -5,9 +5,9 @@ const CreateUser = async (req, res) => {
     const { name, email, password } = req.body
 
     // Verificar si el correo ya está registrado
-    const existingUser = await User.findOne({ where: { email } })
+    const existingUser = await User.findOne({ where: { email, name } })
     if (existingUser) {
-      return res.status(400).json({ error: 'El correo electrónico ya está en uso', Entrega: false })
+      return res.status(400).json({ error: 'El correo electrónico y el usuario ya está en uso', Entrega: false })
     }
 
     // Si el correo no está registrado, crear el nuevo usuario
