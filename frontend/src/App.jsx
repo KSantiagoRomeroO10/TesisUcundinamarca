@@ -12,6 +12,8 @@ import ProtectedRoute from './Components/ProtectedRoutes/ProtectedRoutes'
 
 import UseUserStore from "./Stores/UseUserStore"
 
+import Instructions from './Components/Instructions/Instructions'
+
 import CrudIndex from './Components/Crud/IndexCrud/IndexCrud'
 
 import CrudUsers from './Components/Crud/CrudUsers/Users'
@@ -40,6 +42,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Entrar" element={<Login />} />
         <Route exact path="/Calificarnos" element={<RateUs />} />
+        <Route exact path="/Instrucciones" element={<Instructions/>} />
         
         <Route element={<ProtectedRoute IsAllowed={ValidUser} />}>
           <Route exact path="/CrudIndex" element={<CrudIndex />} />
