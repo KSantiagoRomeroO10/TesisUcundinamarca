@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
+
 const Video = require('./Video')
+const User = require('./User')
 
 class KeyWord extends Model{}
 KeyWord.init(
@@ -21,6 +23,14 @@ KeyWord.init(
       references: {
         model: Video,
         key: 'idVideo'
+      }
+    },
+    idUserFKEvaluation: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: User,
+        key: 'idUser'
       }
     }
   },

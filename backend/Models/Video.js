@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
 
+const User = require('./User')
+
 class Video extends Model {}
 Video.init(
 {
@@ -17,6 +19,14 @@ Video.init(
   fileHash: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  idUserFKVideo: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: User,
+      key: 'idUser'
+    }
   }
 },{ 
   sequelize, modelName: 'Video' 

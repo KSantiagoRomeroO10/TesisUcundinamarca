@@ -11,4 +11,4 @@ source TesisUCundinamarca/bin/activate
 
 migraciones:
 
-python manage.py makemigrations && python manage.py migrate
+cd djangoapi/ && python manage.py makemigrations && python manage.py migrate && cd ../

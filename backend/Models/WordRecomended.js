@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require('sequelize')
 const sequelize = require('./Config/Connect')
 
+const User = require('./User')
+
 class WordRecomended extends Model {}
 WordRecomended.init(
   {
@@ -13,6 +15,14 @@ WordRecomended.init(
     word: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    idUserFKWR: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: User,
+        key: 'idUser'
+      }
     }
   },
   { sequelize, modelName: 'WordRecomended' }

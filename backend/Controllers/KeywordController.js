@@ -3,30 +3,30 @@ const Video = require('../Models/Video')
 
 const CreateKeyWord = async (req, res) => {
   try {
-    const { keyWord, IdVideoFK } = req.body;
+    const { keyWord, IdVideoFK } = req.body
 
     // Verificar si ya existe la keyWord en la base de datos
     const existingKeyWord = await KeyWord.findOne({
       where: { keyWord }, // Solo buscamos por keyWord
-    });
+    })
 
     if (existingKeyWord) {
       return res.status(400).json({
         error: 'La palabra clave ya existe en la base de datos',
         Entrega: false,
-      });
+      })
     }
 
     // Si no existe, crear la nueva palabra clave
-    const newKeyWord = await KeyWord.create({ keyWord, IdVideoFK });
-    const keyWordFinal = newKeyWord.toJSON();
-    keyWordFinal.Entrega = true;
+    const newKeyWord = await KeyWord.create({ keyWord, IdVideoFK })
+    const keyWordFinal = newKeyWord.toJSON()
+    keyWordFinal.Entrega = true
 
-    return res.status(201).json(keyWordFinal);
+    return res.status(201).json(keyWordFinal)
   } catch (error) {
-    res.status(500).json({ error: error.message, Entrega: false });
+    res.status(500).json({ error: error.message, Entrega: false })
   }
-};
+}
 
 const GetKeyWords = async (req, res) => {
   try {

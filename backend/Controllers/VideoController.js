@@ -1,9 +1,32 @@
 const Video = require('../Models/Video')
+const User = require('../Models/User')
+
+const GetVideosForUser = async (req, res) => {
+  try {
+    // const userVideos = await User.findAll({
+    //   include: [{model: Video, as: 'videos'}]
+    // })
+    // res.status(200).json(userVideos)
+    const videosUsers = await Video.findAll({
+      include: [{ model: User }] 
+    })
+    res.status(200).json(videosUsers)
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
 
 const GetVideos = async (req, res) => {
+  const page = parseInt(req.query.page) || 1
+  const limit = parseInt(req.query.limit) || 10
+
   try {
+    const offset = (page - 1) * limit
     const videos = await Video.findAll({ 
-      raw: true 
+      limit: limit,
+      offset: offset,
+      raw: true
     })
     res.status(200).json([ ...videos, {'Entrega': true} ])
   }
@@ -43,4 +66,4 @@ const DeleteVideo = async (req, res) => {
   }
 }
 
-module.exports = { GetVideos, GetVideoById, DeleteVideo }
+module.exports = { GetVideos, GetVideoById, DeleteVideo, GetVideosForUser }

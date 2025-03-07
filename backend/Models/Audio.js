@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('./Config/Connect');
 
+const User = require('./User')
+
 class Audio extends Model {}
 Audio.init(
 {
@@ -17,6 +19,14 @@ Audio.init(
   fileHash: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  idUserFKAudio: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: User,
+      key: 'idUser'
+    }
   }
 },{
   sequelize, modelName: 'Audio' 
