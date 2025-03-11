@@ -4,7 +4,8 @@ import Styles from "./Read.module.css"
 import Delete from "./Delete"
 import Update from "./Update"
 
-const TOTAL_VIDEOS = 49 // Constante para el número total de videos
+let totalVideos = 49 // Constante para el número total de videos
+let idVideos = []
 
 const Read = ({
   data,
@@ -58,8 +59,19 @@ const Read = ({
 
   // Función para inicializar la estructura de datos sin cargar los videos
   const ReadData = async () => {
-    const newData = Array.from({ length: TOTAL_VIDEOS }, (_, index) => ({
-      id: index + 1,
+    try {
+      const response = await fetch(`http://localhost:3001/video/getting/usersvideo`, { method: "GET" })
+      const videoData = await response.json()
+      
+      idVideos = videoData.map((video) => video.idVideo)
+      totalVideos = idVideos.length   
+    }
+    catch (error) {
+      console.error(`Error al generar los ID:`, error)
+    }
+    
+    const newData = Array.from({ length: totalVideos }, (_, index) => ({
+      id: idVideos[index],
       videoBlob: null, // Inicializar sin datos de video
     }))
     setData(newData)
