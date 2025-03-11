@@ -1,12 +1,12 @@
 import Styles from './Videos.module.css'
-import Index from '../CrudIndex/Index'
+import Index from './Index'
 
 const Videos = () => {
 
   const columns = ["id", "video"]
 
   const endPoints = {
-    endPointRead: 'http://localhost:3001/video/get',
+    endPointRead: 'http://localhost:3001/video/get/',
     endPointDelete: 'http://localhost:3001/video/delete',
     endPointUpdate: 'http://127.0.0.1:8000/djangoaplication/video/actualizar',
     endPointNew: 'http://127.0.0.1:8000/djangoaplication/subir_video/'

@@ -3,14 +3,18 @@ const User = require('../Models/User')
 
 const GetVideosForUser = async (req, res) => {
   try {
-    // const userVideos = await User.findAll({
-    //   include: [{model: Video, as: 'videos'}]
-    // })
-    // res.status(200).json(userVideos)
-    const videosUsers = await Video.findAll({
-      include: [{ model: User }] 
+    const videosUsers = await Video.findAll({ include: [{ model: User }], raw: true })
+    const count = await Video.count()
+
+    const response = videosUsers.map(videoUser => {
+      return {
+        'idVideo': videoUser.idVideo,
+        'idUser': videoUser['User.idUser'],
+        'nombre': videoUser['User.name'],
+        'count': count
+      }
     })
-    res.status(200).json(videosUsers)
+    res.status(200).json(response)
   }
   catch (error) {
     res.status(500).json({ error: error.message })

@@ -1,3 +1,4 @@
+const sequelize = require('../Models/Config/Connect');
 const User = require('../Models/User')
 
 const CreateUser = async (req, res) => {

@@ -25,7 +25,7 @@ KeyWord.init(
         key: 'idVideo'
       }
     },
-    idUserFKEvaluation: {
+    idUserFKKW: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {

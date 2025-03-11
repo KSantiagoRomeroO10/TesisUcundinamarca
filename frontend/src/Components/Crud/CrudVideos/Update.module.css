@@ -1,0 +1,50 @@
+.Container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #00000083;
+  width: 100vw;
+  height: 100vh;
+}
+.SubContainer{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eee9e9;
+  padding: 15px 25px;
+  border-radius: 5px;
+}
+.SubContainer h1{
+  margin: 10px;
+}
+.Formulario input{
+  margin: 10px;
+  padding: 10px;
+  width: 275px;
+  border-radius: 5px;
+  border: none;
+}
+
+.Formulario button, .Update{
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.Update{
+  background-color: #4060ee;
+  color: white;
+}
+.Cancel{
+  background-color: #40cbee;
+}
+.Button1{
+  margin: 10px;
+}
+
+.Error{
+  color: red;
+}

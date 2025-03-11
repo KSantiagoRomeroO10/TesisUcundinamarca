@@ -11,14 +11,17 @@ const ChartComponent = () => {
   const [userIds, setUserIds] = useState([])
   const [userRecommendations, setUserRecommendations] = useState([])
   const [wordUserCount, setWordUserCount] = useState({})
+  const [userVideos, setUserVideos] = useState([]) // Nuevo estado para los videos por usuario
 
   // Referencias para los gráficos
   const chartContainer1 = useRef(null)
   const chartContainer2 = useRef(null)
   const chartContainer3 = useRef(null)
+  const chartContainer4 = useRef(null) // Nueva referencia para el cuarto gráfico
   const chartInstance1 = useRef(null)
   const chartInstance2 = useRef(null)
   const chartInstance3 = useRef(null)
+  const chartInstance4 = useRef(null) // Nueva instancia para el cuarto gráfico
 
   // Cargar los datos de palabras
   useEffect(() => {
@@ -70,10 +73,9 @@ const ChartComponent = () => {
           const dataUsers = await responseUsers.json()
           names.push({ name: dataUsers.name, id: userId })
         })
-        
+
         setUserIds(userIds)
         setUserRecommendations(userRecommendations)
-
 
         // Procesar los datos para contar cuántos usuarios recomendaron cada palabra
         const wordCount = {}
@@ -85,7 +87,7 @@ const ChartComponent = () => {
             }
             wordCount[word] += 1 // Contar usuarios, no la cantidad de veces
           })
-        })        
+        })
 
         setWordUserCount(wordCount) // Actualizar el estado con el conteo de usuarios por palabra
       } catch (error) {
@@ -94,6 +96,37 @@ const ChartComponent = () => {
     }
 
     fetchUserRecommendations()
+  }, [])
+
+  // Cargar los datos de videos por usuario
+  useEffect(() => {
+    const fetchUserVideos = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/video/getting/usersvideo')
+        const data = await response.json()
+
+        // Procesar los datos para contar cuántos videos tiene cada usuario
+        const userVideoCount = {}
+        data.forEach(video => {
+          const userId = video.idUser
+          const userName = video.nombre
+
+          if (userVideoCount[userId]) {
+            userVideoCount[userId].count++
+          } else {
+            userVideoCount[userId] = { name: userName, count: 1 }
+          }
+        })
+
+        // Convertir el objeto a un array para usarlo en el gráfico
+        const userVideosArray = Object.values(userVideoCount)
+        setUserVideos(userVideosArray)
+      } catch (error) {
+        console.error('Error al cargar los datos de videos:', error.message)
+      }
+    }
+
+    fetchUserVideos()
   }, [])
 
   // Crear o actualizar los gráficos cuando los datos estén listos
@@ -182,6 +215,36 @@ const ChartComponent = () => {
       })
     }
 
+    // Gráfico 4 (Videos por usuario)
+    if (userVideos.length > 0) {
+      if (chartInstance4.current) {
+        chartInstance4.current.destroy()
+      }
+
+      const ctx4 = chartContainer4.current.getContext('2d')
+      chartInstance4.current = new Chart(ctx4, {
+        type: 'bar',
+        data: {
+          labels: userVideos.map(user => user.name),
+          datasets: [{
+            label: 'Videos por usuario',
+            data: userVideos.map(user => user.count),
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132)',
+            borderWidth: 2,
+            borderRadius: 5,
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      })
+    }
+
     // Limpiar los gráficos al desmontar el componente
     return () => {
       if (chartInstance1.current) {
@@ -193,65 +256,62 @@ const ChartComponent = () => {
       if (chartInstance3.current) {
         chartInstance3.current.destroy()
       }
+      if (chartInstance4.current) {
+        chartInstance4.current.destroy()
+      }
     }
-  }, [words, count, evaluationData, userIds, userRecommendations, wordUserCount])
+  }, [words, count, evaluationData, userIds, userRecommendations, wordUserCount, userVideos])
 
   // Descargar ambos gráficos como PDF
   const downloadPDF = () => {
     const doc = new jsPDF()
 
-    // Establecer el tamaño de fuente
+    // Gráfico 1
     doc.setFontSize(16)
-
-    // Título del primer gráfico
-    const title1 = 'Palabras recomendadas'
-    doc.text(title1, 10, 10)
-
-    // Párrafo del primer gráfico
+    doc.text('Palabras recomendadas', 10, 10)
+    doc.setFontSize(12)
     const paragraph1 = 'A continuación se muestra una tabla en la que se hace el conteo de cada palabra recomendada.'
     const splitParagraph1 = doc.splitTextToSize(paragraph1, 250)
-    doc.setFontSize(12)
     doc.text(splitParagraph1, 10, 20)
-
-    // Gráfico 1
     const canvas1 = chartContainer1.current
     const imgData1 = canvas1.toDataURL('image/png')
     doc.addImage(imgData1, 'PNG', 10, 30, 180, 160)
 
-    // Salto de página para el siguiente gráfico
+    // Gráfico 2
     doc.addPage()
-
-    // Título del segundo gráfico
-    const title2 = 'Promedio de evaluaciones'
     doc.setFontSize(16)
-    doc.text(title2, 10, 10)
-
-    // Párrafo del segundo gráfico
+    doc.text('Promedio de evaluaciones', 10, 10)
+    doc.setFontSize(12)
     const paragraph2 = 'A continuación se muestra una tabla en la que se hace promedio de calificaciones dadas a la traducción y el software.'
     const splitParagraph2 = doc.splitTextToSize(paragraph2, 250)
-    doc.setFontSize(12)
     doc.text(splitParagraph2, 10, 20)
-
-    // Gráfico 2
     const canvas2 = chartContainer2.current
     const imgData2 = canvas2.toDataURL('image/png')
     doc.addImage(imgData2, 'PNG', 10, 30, 180, 160)
 
-    // Título del tercer gráfico
-    const title3 = 'Usuarios que recomendaron cada palabra'
+    // Gráfico 3
+    doc.addPage()
     doc.setFontSize(16)
-    doc.text(title3, 10, 10)
-
-    // Párrafo del tercer gráfico
+    doc.text('Usuarios que recomendaron cada palabra', 10, 10)
+    doc.setFontSize(12)
     const paragraph3 = 'A continuación se muestra una tabla en la que se hace el conteo de usuarios que recomendaron cada palabra.'
     const splitParagraph3 = doc.splitTextToSize(paragraph3, 250)
-    doc.setFontSize(12)
     doc.text(splitParagraph3, 10, 20)
-
-    // Gráfico 3
     const canvas3 = chartContainer3.current
     const imgData3 = canvas3.toDataURL('image/png')
     doc.addImage(imgData3, 'PNG', 10, 30, 180, 160)
+
+    // Gráfico 4
+    doc.addPage()
+    doc.setFontSize(16)
+    doc.text('Videos por usuario', 10, 10)
+    doc.setFontSize(12)
+    const paragraph4 = 'A continuación se muestra una tabla en la que se hace el conteo de videos por usuario.'
+    const splitParagraph4 = doc.splitTextToSize(paragraph4, 250)
+    doc.text(splitParagraph4, 10, 20)
+    const canvas4 = chartContainer4.current
+    const imgData4 = canvas4.toDataURL('image/png')
+    doc.addImage(imgData4, 'PNG', 10, 30, 180, 160)
 
     // Descargar el archivo PDF
     doc.save('Reporte.pdf')
@@ -275,6 +335,12 @@ const ChartComponent = () => {
       <p>A continuación se muestra una tabla en la que se hace el conteo de usuarios que recomendaron cada palabra.</p>
       <div>
         <canvas ref={chartContainer3}></canvas>
+      </div>
+
+      <h1>Videos por usuario</h1>
+      <p>A continuación se muestra una tabla en la que se hace el conteo de videos por usuario.</p>
+      <div>
+        <canvas ref={chartContainer4}></canvas>
       </div>
 
       <button
