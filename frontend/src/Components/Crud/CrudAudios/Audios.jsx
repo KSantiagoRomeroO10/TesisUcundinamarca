@@ -1,4 +1,4 @@
-import Styles from './Videos.module.css'
+import Styles from './Audios.module.css'
 import Index from '../CrudIndex/Index'
 
 const Audios = () => {

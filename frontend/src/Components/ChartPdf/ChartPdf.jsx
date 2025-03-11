@@ -11,17 +11,20 @@ const ChartComponent = () => {
   const [userIds, setUserIds] = useState([])
   const [userRecommendations, setUserRecommendations] = useState([])
   const [wordUserCount, setWordUserCount] = useState({})
-  const [userVideos, setUserVideos] = useState([]) // Nuevo estado para los videos por usuario
+  const [userVideos, setUserVideos] = useState([]) // Estado para los videos por usuario
+  const [userAudios, setUserAudios] = useState([]) // Nuevo estado para los audios por usuario
 
   // Referencias para los gráficos
   const chartContainer1 = useRef(null)
   const chartContainer2 = useRef(null)
   const chartContainer3 = useRef(null)
-  const chartContainer4 = useRef(null) // Nueva referencia para el cuarto gráfico
+  const chartContainer4 = useRef(null) // Referencia para el cuarto gráfico (videos)
+  const chartContainer5 = useRef(null) // Nueva referencia para el quinto gráfico (audios)
   const chartInstance1 = useRef(null)
   const chartInstance2 = useRef(null)
   const chartInstance3 = useRef(null)
-  const chartInstance4 = useRef(null) // Nueva instancia para el cuarto gráfico
+  const chartInstance4 = useRef(null) // Instancia para el cuarto gráfico (videos)
+  const chartInstance5 = useRef(null) // Nueva instancia para el quinto gráfico (audios)
 
   // Cargar los datos de palabras
   useEffect(() => {
@@ -127,6 +130,37 @@ const ChartComponent = () => {
     }
 
     fetchUserVideos()
+  }, [])
+
+  // Cargar los datos de audios por usuario
+  useEffect(() => {
+    const fetchUserAudios = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/audio/getting/usersaudio')
+        const data = await response.json()
+
+        // Procesar los datos para contar cuántos audios tiene cada usuario
+        const userAudioCount = {}
+        data.forEach(audio => {
+          const userId = audio.idUser
+          const userName = audio.nombre
+
+          if (userAudioCount[userId]) {
+            userAudioCount[userId].count++
+          } else {
+            userAudioCount[userId] = { name: userName, count: 1 }
+          }
+        })
+
+        // Convertir el objeto a un array para usarlo en el gráfico
+        const userAudiosArray = Object.values(userAudioCount)
+        setUserAudios(userAudiosArray)
+      } catch (error) {
+        console.error('Error al cargar los datos de audios:', error.message)
+      }
+    }
+
+    fetchUserAudios()
   }, [])
 
   // Crear o actualizar los gráficos cuando los datos estén listos
@@ -245,6 +279,36 @@ const ChartComponent = () => {
       })
     }
 
+    // Gráfico 5 (Audios por usuario)
+    if (userAudios.length > 0) {
+      if (chartInstance5.current) {
+        chartInstance5.current.destroy()
+      }
+
+      const ctx5 = chartContainer5.current.getContext('2d')
+      chartInstance5.current = new Chart(ctx5, {
+        type: 'bar',
+        data: {
+          labels: userAudios.map(user => user.name),
+          datasets: [{
+            label: 'Audios por usuario',
+            data: userAudios.map(user => user.count),
+            backgroundColor: 'rgba(255, 159, 64, 0.6)',
+            borderColor: 'rgba(255, 159, 64)',
+            borderWidth: 2,
+            borderRadius: 5,
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      })
+    }
+
     // Limpiar los gráficos al desmontar el componente
     return () => {
       if (chartInstance1.current) {
@@ -259,8 +323,11 @@ const ChartComponent = () => {
       if (chartInstance4.current) {
         chartInstance4.current.destroy()
       }
+      if (chartInstance5.current) {
+        chartInstance5.current.destroy()
+      }
     }
-  }, [words, count, evaluationData, userIds, userRecommendations, wordUserCount, userVideos])
+  }, [words, count, evaluationData, userIds, userRecommendations, wordUserCount, userVideos, userAudios])
 
   // Descargar ambos gráficos como PDF
   const downloadPDF = () => {
@@ -301,7 +368,7 @@ const ChartComponent = () => {
     const imgData3 = canvas3.toDataURL('image/png')
     doc.addImage(imgData3, 'PNG', 10, 30, 180, 160)
 
-    // Gráfico 4
+    // Gráfico 4 (Videos por usuario)
     doc.addPage()
     doc.setFontSize(16)
     doc.text('Videos por usuario', 10, 10)
@@ -312,6 +379,18 @@ const ChartComponent = () => {
     const canvas4 = chartContainer4.current
     const imgData4 = canvas4.toDataURL('image/png')
     doc.addImage(imgData4, 'PNG', 10, 30, 180, 160)
+
+    // Gráfico 5 (Audios por usuario)
+    doc.addPage()
+    doc.setFontSize(16)
+    doc.text('Audios por usuario', 10, 10)
+    doc.setFontSize(12)
+    const paragraph5 = 'A continuación se muestra una tabla en la que se hace el conteo de audios por usuario.'
+    const splitParagraph5 = doc.splitTextToSize(paragraph5, 250)
+    doc.text(splitParagraph5, 10, 20)
+    const canvas5 = chartContainer5.current
+    const imgData5 = canvas5.toDataURL('image/png')
+    doc.addImage(imgData5, 'PNG', 10, 30, 180, 160)
 
     // Descargar el archivo PDF
     doc.save('Reporte.pdf')
@@ -341,6 +420,12 @@ const ChartComponent = () => {
       <p>A continuación se muestra una tabla en la que se hace el conteo de videos por usuario.</p>
       <div>
         <canvas ref={chartContainer4}></canvas>
+      </div>
+
+      <h1>Audios por usuario</h1>
+      <p>A continuación se muestra una tabla en la que se hace el conteo de audios por usuario.</p>
+      <div>
+        <canvas ref={chartContainer5}></canvas>
       </div>
 
       <button

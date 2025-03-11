@@ -1,4 +1,25 @@
 const Audio = require('../Models/Audio')
+const User = require('../Models/User')
+
+const GetAudiosForUser = async (req, res) => {
+  try {
+    const audiosUsers = await Audio.findAll({ include: [{ model: User }], raw: true })
+    const count = await Audio.count()
+
+    const response = audiosUsers.map(audioUser => {
+      return {
+        'idVideo': audioUser.idAudio,
+        'idUser': audioUser['User.idUser'],
+        'nombre': audioUser['User.name'],
+        'count': count
+      }
+    })
+    res.status(200).json(response)
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
 
 const GetAudios = async (req, res) => {
   try {
@@ -40,4 +61,4 @@ const DeleteAudio = async (req, res) => {
   }
 }
 
-module.exports = { GetAudios, GetAudioById, DeleteAudio }
+module.exports = { GetAudios, GetAudioById, DeleteAudio, GetAudiosForUser }
