@@ -48,8 +48,9 @@ const Video = ({ notes }) => {
     for (const word of words) {
       const videoData = await handleWordVideo(word)
       if (videoData) {
+        const titleUppercase = word.charAt(0).toUpperCase() + word.slice(1)
         const videoUrl = URL.createObjectURL(new Blob([Uint8Array.from(videoData)], { type: "video/mp4" }))
-        videosAndWords.push({ type: "video", url: videoUrl })
+        videosAndWords.push({ type: "video", url: videoUrl, title: titleUppercase })
       } else {
         videosAndWords.push({ type: "word", word })
       }
@@ -98,6 +99,7 @@ const Video = ({ notes }) => {
         <>
           {videoUrls[currentVideoIndex].type === "video" ? (
             <div>
+              <h1>{videoUrls[currentVideoIndex].title}</h1>
               <video
                 controls
                 width="400"

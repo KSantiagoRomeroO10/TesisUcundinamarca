@@ -6,7 +6,7 @@ const Instructions = () => {
       <div className={Styles.InstructionsContainer}>
         <h1 className={Styles.Title}>¡Aprende y diviértete con el traductor de señas!</h1>
         <br />
-        <ol className={Styles.Instructions}>
+        <ul className={Styles.Instructions}>
           <li>
             Habla para traducir
 
@@ -30,7 +30,7 @@ const Instructions = () => {
 
             Si no entiendes algo o necesitas ayuda, llama a un adulto. Ellos están para ayudarte.
           </li>
-        </ol>
+        </ul>
       </div>
     )
 

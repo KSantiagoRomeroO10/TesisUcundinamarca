@@ -69,7 +69,7 @@ const GetKeyWordByWord = async (req, res) => {
       keyWordFinal.Entrega = true
       res.status(200).json(keyWordFinal)
     } else {
-      res.status(404).json({ error: 'KeyWord no encontrada', Entrega: false })
+      res.status(200).json({ error: 'KeyWord no encontrada', Entrega: false })
     }
   } 
   catch (error) {

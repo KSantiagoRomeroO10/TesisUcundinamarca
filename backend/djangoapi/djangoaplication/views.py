@@ -95,7 +95,7 @@ def subir_audio(request):
 
 @csrf_exempt
 def actualizar_video(request, idVideo):
-  if request.method == 'POST':  # <-- Antes era 'PUT'
+  if request.method == 'POST':
     try:
       video = Video.objects.get(idVideo=idVideo)
 

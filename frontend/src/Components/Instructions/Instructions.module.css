@@ -11,3 +11,7 @@
 .Title{
   text-align: center;
 }
+
+.Instructions{
+  list-style: "⭐ ";
+}

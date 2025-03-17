@@ -44,9 +44,17 @@ const Calification = () => {
     console.log("Software:", software)
   }, [traduccion, software])
 
+  const emojis = ["😢", "😔", "😐", "🙂", "😁"]
+
   // Renderización
   return (
     <div className={Styles.Container}>
+      
+      <div className={Styles.Emoji1}>😁</div>
+      <div className={Styles.Emoji2}>🔥</div>
+      <div className={Styles.Emoji3}>🧸</div>
+      <div className={Styles.Emoji4}>🍭</div>
+
       <h1 className={Styles.Title}>Encuesta de Opinión</h1>
       <br />
       <hr />
@@ -58,13 +66,13 @@ const Calification = () => {
         <br />
         <br />
         <div>
-          {[1, 2, 3, 4, 5].map((num) => (
+          {emojis.map((emoji, num) => (
             <button
-              key={`software-${num}`}
-              onClick={() => handleRating(setSoftware, num)}
-              className={`${Styles.Stars} ${software >= num ? Styles.StarsFocus : ''}`}
+              key={`software-${num+1}`}
+              onClick={() => handleRating(setSoftware, num+1)}
+              className={`${Styles.Stars} ${software >= num+1 ? Styles.StarsFocus : ''}`}
             >
-              {num} ★
+              {emoji}
             </button>
           ))}
         </div>
@@ -76,13 +84,13 @@ const Calification = () => {
         <br />
         <br />
         <div>
-          {[1, 2, 3, 4, 5].map((num) => (
+          {emojis.map((emoji, num) => (
             <button
-              key={`traduccion-${num}`}
-              onClick={() => handleRating(setTraduccion, num)}
-              className={`${Styles.Stars} ${traduccion >= num ? Styles.StarsFocus : ''}`}
+              key={`traduccion-${num+1}`}
+              onClick={() => handleRating(setTraduccion, num+1)}
+              className={`${Styles.Stars} ${traduccion >= num+1 ? Styles.StarsFocus : ''}`}
             >
-              {num} ★
+              {emoji}
             </button>
           ))}
         </div>

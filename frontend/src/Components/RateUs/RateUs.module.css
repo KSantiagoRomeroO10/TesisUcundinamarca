@@ -1,7 +1,7 @@
 .Container{
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 55%;
   transform: translate(-50%, -50%);
   background-color: #eee9e9;
   max-width: fit-content;
@@ -16,17 +16,20 @@
 
 .Stars{
   margin: 5px;
-  padding: 10px;
+  padding: 5px;
   font-weight: normal;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   background-color: #bbbbbb;
+  font-size: 25px;
+  filter: grayscale(100%);
 }
 
 .StarsFocus{
   background-color: #40cbee;
   color: white;
+  filter: grayscale(0%);
 }
 
 .Button{
@@ -44,4 +47,32 @@
 .ButtonNoActive{
   background-color: #4CAF50;
   cursor: pointer;
+}
+
+.Emoji1, .Emoji2, .Emoji3, .Emoji4{
+  position: absolute;
+  font-size: 80px;
+  margin: 10px;
+}
+
+.Emoji1{
+  top: -10%;
+  left: -10%;
+  transform: rotate(-30deg);
+}
+
+.Emoji2{
+  top: -10%;
+  right: -10%;
+  transform: rotate(30deg);
+}
+
+.Emoji3{
+  bottom: -10%;
+  left: -10%;
+}
+
+.Emoji4{
+  bottom: -10%;
+  right: -10%;
 }
