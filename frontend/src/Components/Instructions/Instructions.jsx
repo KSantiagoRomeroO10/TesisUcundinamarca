@@ -4,6 +4,10 @@ const Instructions = () => {
 
     return(
       <div className={Styles.InstructionsContainer}>
+        <div className={Styles.Emoji1}>🚀</div>
+        <div className={Styles.Emoji2}>🎨</div>
+        <div className={Styles.Emoji3}>🦕</div>
+        <div className={Styles.Emoji4}>🎁</div>
         <h1 className={Styles.Title}>¡Aprende y diviértete con el traductor de señas!</h1>
         <br />
         <ul className={Styles.Instructions}>

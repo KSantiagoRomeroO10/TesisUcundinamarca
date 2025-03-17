@@ -16,7 +16,7 @@ const Navbar = ({ ValidUser }) => {
   return(
     <nav className={Styles.Navbar}>
       <NavLink to='/'>
-        <h1>Lengua de señas Colombiana</h1>
+        <h1>Mundo Señas</h1>
       </NavLink>
       <HamburgerMenu routes={routes}/>
     </nav>

@@ -1,12 +1,18 @@
-.InstructionsContainer{
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+
+.InstructionsContainer{  
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #eee9e9;
   padding: 50px;
   border-radius: 5px;
   text-align: left;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  font-family: "Delius", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
 .Title{
   text-align: center;
@@ -14,4 +20,32 @@
 
 .Instructions{
   list-style: "⭐ ";
+}
+
+.Emoji1, .Emoji2, .Emoji3, .Emoji4{
+  position: absolute;
+  font-size: 80px;
+  margin: 10px;
+}
+
+.Emoji1{
+  top: -10%;
+  left: -10%;
+  transform: rotate(-30deg);
+}
+
+.Emoji2{
+  top: -10%;
+  right: -10%;
+  transform: rotate(30deg);
+}
+
+.Emoji3{
+  bottom: -10%;
+  left: -10%;
+}
+
+.Emoji4{
+  bottom: -10%;
+  right: -10%;
 }
