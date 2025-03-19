@@ -26,16 +26,29 @@
   font-size: 16px;
 }
 
-.notes {
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 5px;
-  width: 380px;
-  overflow-y: auto;
-  text-align: left;
-  font-size: 20px;
+.notes h2{
+  text-align: center;
 }
 
-.notes h2{
+.notes {
+  width: 320px;
+  margin: 20px;
+  padding: 15px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.7);
+  color: #333;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.notes h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #000;
   text-align: center;
 }

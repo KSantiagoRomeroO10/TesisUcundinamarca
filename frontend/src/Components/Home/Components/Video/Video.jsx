@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import Styles from "./Video.module.css"
+import Loading from './Loading/Loading'
 
 const Video = ({ notes }) => {
   const [videoUrls, setVideoUrls] = useState([]) // URLs de los videos y palabras no encontradas
@@ -137,7 +138,9 @@ const Video = ({ notes }) => {
           )}
         </>
       ) : (
-        <h1>Esperando audio...</h1>
+        <div>
+          <Loading />
+        </div>
       )}
     </div>
   )

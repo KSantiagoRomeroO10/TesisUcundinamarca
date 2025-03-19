@@ -1,6 +1,8 @@
 import Styles from './Navbar.module.css'
 import HamburgerMenu from './HamburgerMenu/HamburgerMenu'
 import { NavLink } from 'react-router-dom'
+import logo from "/Images/Logo.png"
+import udec from "/Images/Udec.png"
 
 const Navbar = ({ ValidUser }) => {
 
@@ -16,7 +18,8 @@ const Navbar = ({ ValidUser }) => {
   return(
     <nav className={Styles.Navbar}>
       <NavLink to='/'>
-        <h1>Mundo Señas</h1>
+        <img src={logo} alt="Error 404" className={Styles.micIcon} />
+        <img src={udec} alt="Error 404" className={Styles.micIcon1} />
       </NavLink>
       <HamburgerMenu routes={routes}/>
     </nav>

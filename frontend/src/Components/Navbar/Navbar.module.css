@@ -23,8 +23,22 @@
 .Navbar h1{
   float: left;
   margin: 20px;
+  margin-left: 130px;
   color: white;
   font-size: 45px;
+}
+
+.micIcon{
+  width: 120px;
+  position: absolute;
+  top: 0;
+  left: 10px;
+}
+.micIcon1{
+  width: 70px;
+  position: absolute;
+  top: 15px;
+  left: 150px;
 }
 
 @media (max-width: 700px) {
