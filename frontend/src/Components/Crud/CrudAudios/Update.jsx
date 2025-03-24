@@ -1,7 +1,7 @@
 import Styles from './Update.module.css'
 import { useEffect, useState, useCallback } from 'react'
 
-const Update = ({ endPointUpdate, columns, id, data, setData }) => {
+const Update = ({ endPointUpdate, columns, id, data, setData, setSuccessMessage }) => {
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({})
   const [errorEmpty, setErrorEmpty] = useState(false)
@@ -55,6 +55,10 @@ const Update = ({ endPointUpdate, columns, id, data, setData }) => {
       setData(updatedData)
       setOpen(false)
       console.log('Datos actualizados con éxito', formData)
+      setSuccessMessage('¡Datos actualizados con éxito!')
+
+      // Ocultar mensaje después de 3 segundos
+      setTimeout(() => setSuccessMessage(''), 5000)
     } catch (error) {
       console.error('Error en la actualización:', error)
       alert('Hubo un problema al actualizar los datos. Inténtalo de nuevo.')

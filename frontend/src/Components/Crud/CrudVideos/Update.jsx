@@ -52,6 +52,10 @@ const Update = ({ endPointUpdate, columns, id, data, setData }) => {
       const updatedData = data.map((item) =>
         item.id === id ? { ...item, ...formData } : item
       )
+      setSuccessMessage('¡Datos actualizados con éxito!')
+
+      // Ocultar mensaje después de 3 segundos
+      setTimeout(() => setSuccessMessage(''), 5000)
       setData(updatedData)
       setOpen(false)
       console.log('Datos actualizados con éxito', formData)

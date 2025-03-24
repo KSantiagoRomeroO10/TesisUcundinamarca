@@ -1,11 +1,15 @@
 import Styles from './Delete.module.css'
 import { useState } from "react"
 
-const Delete = ({ endPointDelete, id, data, setData }) => {
+const Delete = ({ endPointDelete, id, data, setData, setSuccessEliminate }) => {
 
   const [open, setOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handlerDeleteData = async () => {    
+    if (isLoading) return
+
+    setIsLoading(true)
     try {
       const response = await fetch(`${endPointDelete}/${id}`, {
         method: 'DELETE'
@@ -15,16 +19,19 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
         throw new Error("Error al eliminar el elemento.")
       }
 
-      const responseDelete = await response.json()
-
       const deleteData = data.filter(item => item.id !== id)
       setData(deleteData)
+      setSuccessEliminate('¡Elemento eliminado con éxito!')
 
+      // Ocultar mensaje después de 3 segundos
+      setTimeout(() => setSuccessEliminate(''), 5000)
       handleOpen()
-      console.log(responseDelete)
     } 
     catch (error) {
       console.error("Error eliminando el elemento:", error)
+      alert("Hubo un problema al eliminar el elemento. Inténtalo de nuevo.")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -34,7 +41,9 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
 
   return (
     <div>
-      <button className={Styles.Button} onClick={handleOpen}>Eliminar</button>
+      <button className={Styles.Button} onClick={handleOpen} disabled={isLoading}>
+        {isLoading ? 'Eliminando...' : 'Eliminar'}
+      </button>
       
       {open && (
       <div className={Styles.ContainerSpam}>
@@ -43,12 +52,13 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
           <br />
           <p>¿Está seguro de que desea eliminar?</p>
           <br />          
-          <button className={`${Styles.Button} ${Styles.Button1}`} onClick={handlerDeleteData}>Eliminar</button>
-          <button className={Styles.Cancel} onClick={handleOpen}>Cancelar</button>
+          <button className={`${Styles.Button} ${Styles.Button1}`} onClick={handlerDeleteData} disabled={isLoading}>
+            {isLoading ? 'Eliminando...' : 'Eliminar'}
+          </button>
+          <button className={Styles.Cancel} onClick={handleOpen} disabled={isLoading}>Cancelar</button>
         </div>        
       </div>
       )}
-
     </div>
   )
 }

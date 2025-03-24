@@ -1,5 +1,6 @@
 import Styles from './Audios.module.css'
 import Index from '../CrudIndex/Index'
+import Styles1 from "./Index.module.css"
 
 const Audios = () => {
 
@@ -15,7 +16,7 @@ const Audios = () => {
   return (
     <div>
       <br />
-      <h1 className={Styles.Title}>CRUD Usuarios</h1>
+      <h1 className={Styles.Title}>CRUD Audios</h1>
       <br />
       <Index columns={columns} endPoints={endPoints} />
     </div>

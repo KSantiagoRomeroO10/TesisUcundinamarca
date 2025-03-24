@@ -1,7 +1,7 @@
 import Styles from './Delete.module.css'
 import { useState } from "react"
 
-const Delete = ({ endPointDelete, id, data, setData }) => {
+const Delete = ({ endPointDelete, id, data, setData, setSuccessEliminate }) => {
 
   const [open, setOpen] = useState(false)
 
@@ -19,6 +19,10 @@ const Delete = ({ endPointDelete, id, data, setData }) => {
 
       const deleteData = data.filter(item => item.id !== id)
       setData(deleteData)
+      setSuccessEliminate('¡Elemento eliminado con éxito!')
+
+      // Ocultar mensaje después de 3 segundos
+      setTimeout(() => setSuccessEliminate(''), 5000)
 
       handleOpen()
       console.log(responseDelete)

@@ -14,6 +14,8 @@ const Read = ({
   endPointUpdate,
   endPointRead,
   endPointDelete,
+  setSuccessMessage,
+  setSuccessEliminate
 }) => {
   // Estados para manejar audio
   const [audioUrl, setAudioUrl] = useState("")
@@ -115,6 +117,7 @@ const Read = ({
                   id={row.id}
                   data={data}
                   setData={setData}
+                  setSuccessEliminate={setSuccessMessage}
                 />
               </td>
               <td className={Styles.TableCell}>
@@ -124,6 +127,7 @@ const Read = ({
                   id={row.id}
                   data={data}
                   setData={setData}
+                  setSuccessMessage={setSuccessMessage}
                 />
               </td>
             </tr>

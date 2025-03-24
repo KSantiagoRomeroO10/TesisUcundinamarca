@@ -1,0 +1,9 @@
+.Success{
+  color: white;
+  background-color: #701154;
+  padding: 10px;
+  border-radius: 5px;
+  width: 200px;
+  position: absolute;
+  right: 30px;
+}

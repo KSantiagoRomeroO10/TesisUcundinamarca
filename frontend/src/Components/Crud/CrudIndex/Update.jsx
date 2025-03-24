@@ -1,7 +1,7 @@
 import Styles from './Update.module.css'
 import { useEffect, useState, useCallback } from 'react'
 
-const Update = ({ endPointUpdate, columns, id, data, setData }) => {
+const Update = ({ endPointUpdate, columns, id, data, setData, setSuccessMessage }) => {
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({})
   const [errorEmpty, setErrorEmpty] = useState(false)
@@ -27,13 +27,11 @@ const Update = ({ endPointUpdate, columns, id, data, setData }) => {
       let response
       if (endPointUpdate.toLowerCase().includes('djangoaplication')) {
         const formDataToSend = new FormData()
-
-        // Recorremos las columnas y añadimos los datos al FormData
         columns.forEach((column) => {
           if (column.toLowerCase() === 'video' && formData[column] instanceof File) {
-            formDataToSend.append('video_file', formData[column]) // Usamos 'video_file' para videos
+            formDataToSend.append('video_file', formData[column])
           } else if (column.toLowerCase() === 'audio' && formData[column] instanceof File) {
-            formDataToSend.append('audio_file', formData[column]) // Usamos 'audio_file' para audios
+            formDataToSend.append('audio_file', formData[column])
           }
         })
 
@@ -49,12 +47,17 @@ const Update = ({ endPointUpdate, columns, id, data, setData }) => {
         })
       }
 
+      if (!response.ok) throw new Error('Error en la actualización')
+
       const updatedData = data.map((item) =>
         item.id === id ? { ...item, ...formData } : item
       )
       setData(updatedData)
       setOpen(false)
-      console.log('Datos actualizados con éxito', formData)
+      setSuccessMessage('¡Datos actualizados con éxito!')
+
+      // Ocultar mensaje después de 3 segundos
+      setTimeout(() => setSuccessMessage(''), 5000)
     } catch (error) {
       console.error('Error en la actualización:', error)
       alert('Hubo un problema al actualizar los datos. Inténtalo de nuevo.')
