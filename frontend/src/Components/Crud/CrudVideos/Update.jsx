@@ -1,7 +1,7 @@
 import Styles from './Update.module.css'
 import { useEffect, useState, useCallback } from 'react'
 
-const Update = ({ endPointUpdate, columns, id, data, setData }) => {
+const Update = ({ endPointUpdate, columns, id, data, setData, setSuccessMessage }) => {
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({})
   const [errorEmpty, setErrorEmpty] = useState(false)

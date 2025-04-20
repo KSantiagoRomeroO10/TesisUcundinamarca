@@ -6,10 +6,10 @@ import Styles from "./Index.module.css"
 const Index = ({ columns, endPoints }) => {
 
   const [data, setData] = useState([])
-  
-  const { endPointDelete, endPointRead, endPointUpdate, endPointNew } = endPoints
   const [successMessage, setSuccessMessage] = useState('')
   const [SuccessEliminate, setSuccessEliminate] = useState('')
+
+  const { endPointDelete, endPointRead, endPointUpdate, endPointNew } = endPoints
   
   return (
     <div>

@@ -14,6 +14,8 @@ const Read = ({
   endPointUpdate,
   endPointRead,
   endPointDelete,
+  setSuccessMessage,
+  setSuccessEliminate
 }) => {
   // Estados para manejar video
   const [videoUrl, setVideoUrl] = useState("")
@@ -144,7 +146,7 @@ const Read = ({
                   id={row.id}
                   data={data}
                   setData={setData}
-                  setSuccessEliminate={setSuccessMessage}
+                  setSuccessEliminate={setSuccessEliminate}
                 />
               </td>
               <td className={Styles.TableCell}>
